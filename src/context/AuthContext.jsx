@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
 
       if (token) {
         try {
-          const response = await api.get('/auth/verify');
+          await api.get('/auth/verify');
           const savedUser = JSON.parse(localStorage.getItem('user'));
           setUser(savedUser);
         } catch (error) {
