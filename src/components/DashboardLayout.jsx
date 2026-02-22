@@ -285,7 +285,6 @@ const styles = {
     fontSize: '15px',
     fontWeight: '500',
     transition: 'all 0.2s',
-    borderRadius: '0',
     margin: '2px 12px',
     borderRadius: '8px',
   },

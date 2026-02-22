@@ -29,7 +29,7 @@ const Home = () => {
       {/* Cards de boas vindas */}
       <div style={styles.welcomeCard}>
         <h2 style={styles.welcomeTitle}>
-          Bem-vindo ao Dashboard! 🎉
+          🚀 TESTE DEPLOY VERCEL 123 🚀
         </h2>
         <p style={styles.welcomeText}>
           Gerencie seu sistema de forma fácil e rápida
