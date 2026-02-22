@@ -41,7 +41,7 @@ const DashboardLayout = ({ children }) => {
           >
             {isCollapsed ? '☰' : '✕'}
           </button>
-          <h1 style={styles.logo}>Nippon Journeys</h1>
+          <h1 style={styles.logo}>🗾 Nippon Journeys</h1>
         </div>
         <button onClick={handleLogout} style={styles.logoutButton}>
           Sair
