@@ -29,7 +29,7 @@ const Home = () => {
       {/* Cards de boas vindas */}
       <div style={styles.welcomeCard}>
         <h2 style={styles.welcomeTitle}>
-          🚀 TESTE DEPLOY VERCEL 123 🚀
+          Dashboard
         </h2>
         <p style={styles.welcomeText}>
           Gerencie seu sistema de forma fácil e rápida
@@ -80,19 +80,18 @@ const Home = () => {
 
 const styles = {
   welcomeCard: {
-    backgroundColor: '#4f46e5',
-    padding: '32px',
+    padding: '0 10px 0 4px',
     borderRadius: '12px',
     marginBottom: '32px',
-    color: '#fff',
+    color: '#1a1a2e',
   },
   welcomeTitle: {
-    margin: '0 0 8px 0',
+    margin: '0',
     fontSize: '24px',
   },
   welcomeText: {
     margin: 0,
-    fontSize: '16px',
+    fontSize: '14px',
     opacity: '0.9',
   },
   errorCard: {
@@ -111,8 +110,8 @@ const styles = {
   card: {
     backgroundColor: '#fff',
     padding: '28px',
-    borderRadius: '12px',
-    boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
+    borderRadius: '5px',
+    boxShadow: '0 0px 1px rgba(0,0,0,0.20)',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

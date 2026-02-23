@@ -41,7 +41,7 @@ const DashboardLayout = ({ children }) => {
           >
             {isCollapsed ? '☰' : '✕'}
           </button>
-          <h1 style={styles.logo}>🗾 Nippon Journeys</h1>
+          <h1 style={styles.logo}>Nippon Journeys</h1>
         </div>
         <button onClick={handleLogout} style={styles.logoutButton}>
           Sair
@@ -52,7 +52,7 @@ const DashboardLayout = ({ children }) => {
         {/* Sidebar */}
         <aside style={{
           ...styles.sidebar,
-          width: isCollapsed ? '80px' : '260px',
+          width: isCollapsed ? '50px' : '170px',
         }}>
           <nav style={styles.nav}>
             <div style={styles.menuSection}>
@@ -71,7 +71,7 @@ const DashboardLayout = ({ children }) => {
                     ...styles.menuItem,
                     ...(isActive(item.path) ? styles.menuItemActive : {}),
                     justifyContent: isCollapsed ? 'center' : 'flex-start',
-                    paddingLeft: isCollapsed ? '0' : '16px',
+                    paddingLeft: isCollapsed ? '9px' : '16px',
                   }}
                   title={isCollapsed ? item.label : ''}
                 >
@@ -180,7 +180,7 @@ const DashboardLayout = ({ children }) => {
         {/* Content */}
         <main style={{
           ...styles.content,
-          marginLeft: isCollapsed ? '80px' : '260px',
+          marginLeft: isCollapsed ? '50px' : '170px',
         }}>
           {children}
         </main>
@@ -195,12 +195,12 @@ const styles = {
     backgroundColor: '#f5f7fa',
   },
   header: {
-    backgroundColor: '#fff',
-    padding: '16px 32px',
+    backgroundColor: '#1d2327',
+    padding: '1px 15px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+    boxShadow: '0 1px 1px rgba(0,0,0,0.05)',
     position: 'sticky',
     top: 0,
     zIndex: 100,
@@ -211,13 +211,13 @@ const styles = {
     gap: '16px',
   },
   toggleButton: {
-    width: '40px',
-    height: '40px',
+    width: '20px',
+    height: '20px',
     border: 'none',
     backgroundColor: '#f5f7fa',
-    borderRadius: '8px',
+    borderRadius: '50%',
     cursor: 'pointer',
-    fontSize: '18px',
+    fontSize: '10px',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -225,17 +225,17 @@ const styles = {
   },
   logo: {
     margin: 0,
-    fontSize: '20px',
-    fontWeight: '600',
-    color: '#1a1a2e',
+    fontSize: '14px',
+    fontWeight: '400',
+    color: '#fff',
   },
   logoutButton: {
-    padding: '8px 16px',
+    padding: '8px 8px',
     backgroundColor: '#fff',
     color: '#e74c3c',
-    border: '1.5px solid #e74c3c',
-    borderRadius: '8px',
-    fontSize: '14px',
+    border: '1.5px solid #fff',
+    borderRadius: '50%',
+    fontSize: '11px',
     fontWeight: '500',
     cursor: 'pointer',
     transition: 'all 0.2s',
@@ -245,11 +245,11 @@ const styles = {
     position: 'relative',
   },
   sidebar: {
-    backgroundColor: '#fff',
-    height: 'calc(100vh - 72px)',
+    backgroundColor: '#1d2327',
+    height: 'calc(100vh - 30px)',
     position: 'fixed',
     left: 0,
-    top: '72px',
+    top: '30px',
     display: 'flex',
     flexDirection: 'column',
     borderRight: '1px solid #e9ecef',
@@ -260,13 +260,13 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    padding: '24px 0',
+    padding: '0 ',
   },
   menuSection: {
     flex: 1,
   },
   sectionTitle: {
-    fontSize: '11px',
+    fontSize: '10px',
     fontWeight: '600',
     color: '#8e9aaf',
     textTransform: 'uppercase',
@@ -280,21 +280,21 @@ const styles = {
     alignItems: 'center',
     gap: '12px',
     padding: '12px 16px',
-    color: '#6b7280',
+    color: '#c3c4c7',
     textDecoration: 'none',
-    fontSize: '15px',
+    fontSize: '14px',
     fontWeight: '500',
     transition: 'all 0.2s',
-    margin: '2px 12px',
-    borderRadius: '8px',
+    margin: '2px 0px',
+    borderRadius: '0px',
   },
   menuItemActive: {
-    backgroundColor: '#f0f1ff',
-    color: '#4f46e5',
-    fontWeight: '600',
+    backgroundColor: '#2271b1',
+    color: '#fff',
+    fontWeight: '500',
   },
   menuIcon: {
-    fontSize: '20px',
+    fontSize: '15px',
     minWidth: '20px',
     display: 'flex',
     alignItems: 'center',
@@ -342,7 +342,7 @@ const styles = {
     cursor: 'pointer',
   },
   bottomMenu: {
-    borderTop: '1px solid #e9ecef',
+    borderTop: '1px solid #3b3b3b',
     paddingTop: '16px',
     marginTop: '16px',
   },
@@ -351,7 +351,7 @@ const styles = {
     alignItems: 'center',
     gap: '12px',
     padding: '16px',
-    borderTop: '1px solid #e9ecef',
+    borderTop: '1px solid #3b3b3b',
     marginTop: '16px',
   },
   avatar: {
@@ -373,7 +373,7 @@ const styles = {
   userName: {
     fontSize: '14px',
     fontWeight: '600',
-    color: '#1a1a2e',
+    color: '#fff',
     margin: 0,
     whiteSpace: 'nowrap',
     overflow: 'hidden',
@@ -389,7 +389,7 @@ const styles = {
   },
   content: {
     flex: 1,
-    padding: '32px',
+    padding: '1.1rem 1rem 1rem 1.3rem',
     transition: 'margin-left 0.3s ease',
     minHeight: 'calc(100vh - 72px)',
   },
