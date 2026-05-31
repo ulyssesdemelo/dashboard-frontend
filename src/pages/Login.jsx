@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import logo from '../assets/images/dashboard-logotipo-nippon-journeys-viagens-e-turismo-tsuru-492x216.png';
 
 const Login = () => {
   const { login } = useAuth();
@@ -30,6 +31,7 @@ const Login = () => {
 
   return (
     <div style={styles.container}>
+      <img src={logo} alt="Nippon Journeys" style={styles.logo} />
       <div style={styles.card}>
         <h2 style={styles.title}>Entrar</h2>
         <p style={styles.subtitle}>Bem-vindo de volta!</p>
@@ -118,15 +120,22 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f0f2f5',
-  },
+        flexFlow: 'column',
+    backgroundColor: 'rgb(243, 244, 246)',
+},
+    logo: {
+  width: '180px',
+  height: 'auto',
+  display: 'block',
+  margin: '0 auto 30px auto',
+},
   card: {
     backgroundColor: '#fff',
-    padding: '40px',
-    borderRadius: '12px',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+    padding: '20px 40px',
+    border: '1px solid rgba(75, 85, 99, 0.2)',
+    borderRadius: '.4rem',
     width: '100%',
-    maxWidth: '400px',
+    maxWidth: '20rem',
   },
   title: {
     margin: '0 0 8px 0',
@@ -151,7 +160,6 @@ const styles = {
   },
   label: {
     fontSize: '14px',
-    fontWeight: '600',
     color: '#333',
   },
   input: {
@@ -176,7 +184,7 @@ const styles = {
   },
   button: {
     padding: '13px',
-    backgroundColor: '#4f46e5',
+    backgroundColor: '#007bff',
     color: '#fff',
     border: 'none',
     borderRadius: '8px',
