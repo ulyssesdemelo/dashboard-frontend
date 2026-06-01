@@ -7,6 +7,7 @@ const DashboardLayout = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -43,9 +44,40 @@ const DashboardLayout = ({ children }) => {
           </button>
           <h1 style={styles.logo}>Nippon Journeys</h1>
         </div>
-        <button onClick={handleLogout} style={styles.logoutButton}>
-          Sair
-        </button>
+<div
+          style={styles.avatarMenuContainer}
+          onMouseEnter={() => setMenuOpen(true)}
+          onMouseLeave={() => setMenuOpen(false)}
+        >
+          {/* Avatar no header */}
+          <div style={styles.headerAvatar}>
+            {getInitials(user?.name)}
+          </div>
+
+          {/* Dropdown */}
+          {menuOpen && (
+            <div style={styles.dropdown}>
+              {/* Cabeçalho do menu: avatar + nome + email */}
+              <div style={styles.dropdownHeader}>
+                <div style={styles.dropdownAvatar}>
+                  {getInitials(user?.name)}
+                </div>
+                <div style={styles.dropdownUserInfo}>
+                  <p style={styles.dropdownName}>{user?.name}</p>
+                  <p style={styles.dropdownEmail}>{user?.email}</p>
+                </div>
+              </div>
+
+              <div style={styles.dropdownDivider} />
+
+              {/* Botão Sair */}
+              <button onClick={handleLogout} style={styles.dropdownLogout}>
+                <span style={styles.dropdownLogoutIcon}>↪</span>
+                Sair
+              </button>
+            </div>
+          )}
+        </div>
       </header>
 
       <div style={styles.mainContainer}>
@@ -158,22 +190,6 @@ const DashboardLayout = ({ children }) => {
                 {!isCollapsed && <span style={styles.menuLabel}>Ajuda</span>}
               </Link>
             </div>
-
-            {/* User Profile */}
-            <div style={{
-              ...styles.userProfile,
-              justifyContent: isCollapsed ? 'center' : 'flex-start',
-            }}>
-              <div style={styles.avatar}>
-                {getInitials(user?.name)}
-              </div>
-              {!isCollapsed && (
-                <div style={styles.userInfo}>
-                  <p style={styles.userName}>{user?.name}</p>
-                  <p style={styles.userEmail}>{user?.email}</p>
-                </div>
-              )}
-            </div>
           </nav>
         </aside>
 
@@ -240,6 +256,103 @@ const styles = {
     cursor: 'pointer',
     transition: 'all 0.2s',
   },
+
+
+  avatarMenuContainer: {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
+    paddingBottom: '4px',
+  },
+  headerAvatar: {
+    width: '28px',
+    height: '28px',
+    borderRadius: '50%',
+    backgroundColor: '#4f46e5',
+    color: '#fff',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '12px',
+    fontWeight: '600',
+    border: '2px solid #fff',
+  },
+  dropdown: {
+    position: 'absolute',
+    top: '36px',
+    right: 0,
+    width: '240px',
+    backgroundColor: '#fff',
+    borderRadius: '12px',
+    boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+    padding: '12px',
+    zIndex: 200,
+  },
+  dropdownHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    padding: '8px',
+  },
+  dropdownAvatar: {
+    width: '44px',
+    height: '44px',
+    borderRadius: '50%',
+    backgroundColor: '#4f46e5',
+    color: '#fff',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '16px',
+    fontWeight: '600',
+    flexShrink: 0,
+  },
+  dropdownUserInfo: {
+    overflow: 'hidden',
+  },
+  dropdownName: {
+    fontSize: '14px',
+    fontWeight: '600',
+    color: '#1a1a2e',
+    margin: 0,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+  dropdownEmail: {
+    fontSize: '12px',
+    color: '#8e9aaf',
+    margin: 0,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+  dropdownDivider: {
+    height: '1px',
+    backgroundColor: '#e9ecef',
+    margin: '8px 0',
+  },
+  dropdownLogout: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    padding: '10px 8px',
+    backgroundColor: 'transparent',
+    color: '#e74c3c',
+    border: 'none',
+    borderRadius: '8px',
+    fontSize: '14px',
+    fontWeight: '500',
+    cursor: 'pointer',
+    textAlign: 'left',
+  },
+  dropdownLogoutIcon: {
+    fontSize: '16px',
+  },
+
+
   mainContainer: {
     display: 'flex',
     position: 'relative',
@@ -345,47 +458,6 @@ const styles = {
     borderTop: '1px solid #3b3b3b',
     paddingTop: '16px',
     marginTop: '16px',
-  },
-  userProfile: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-    padding: '16px',
-    borderTop: '1px solid #3b3b3b',
-    marginTop: '16px',
-  },
-  avatar: {
-    width: '40px',
-    height: '40px',
-    borderRadius: '50%',
-    backgroundColor: '#4f46e5',
-    color: '#fff',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '14px',
-    fontWeight: '600',
-    flexShrink: 0,
-  },
-  userInfo: {
-    overflow: 'hidden',
-  },
-  userName: {
-    fontSize: '14px',
-    fontWeight: '600',
-    color: '#fff',
-    margin: 0,
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-  userEmail: {
-    fontSize: '12px',
-    color: '#8e9aaf',
-    margin: 0,
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
   },
   content: {
     flex: 1,
