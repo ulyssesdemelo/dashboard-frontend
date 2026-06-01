@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import logo from '../assets/images/apple-touch-icon.png';
+import logo from '../assets/images/headerlogo-nippon-journeys-branco-48x48.png';
 
 const DashboardLayout = ({ children }) => {
   const { user, logout } = useAuth();
@@ -46,8 +46,16 @@ const DashboardLayout = ({ children }) => {
           onMouseLeave={() => setMenuOpen(false)}
         >
           {/* Avatar no header */}
-          <div style={styles.headerAvatar}>
-            {getInitials(user?.name)}
+<div style={styles.headerAvatar}>
+            {user?.avatar_url ? (
+              <img
+                src={user.avatar_url}
+                alt={user.name}
+                style={styles.headerAvatarImg}
+              />
+            ) : (
+              getInitials(user?.name)
+            )}
           </div>
 
           {/* Dropdown */}
@@ -293,6 +301,14 @@ const styles = {
     fontWeight: '600',
     border: '2px solid #fff',
   },
+
+    headerAvatarImg: {
+    width: '100%',
+    height: '100%',
+    borderRadius: '50%',
+    objectFit: 'cover',
+  },
+
   dropdown: {
     position: 'absolute',
     top: '36px',
