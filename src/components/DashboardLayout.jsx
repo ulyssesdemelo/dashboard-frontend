@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import logo from '../assets/images/apple-touch-icon.png';
 
 const DashboardLayout = ({ children }) => {
   const { user, logout } = useAuth();
@@ -36,12 +37,7 @@ const DashboardLayout = ({ children }) => {
       {/* Header */}
       <header style={styles.header}>
         <div style={styles.headerLeft}>
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            style={styles.toggleButton}
-          >
-            {isCollapsed ? '☰' : '✕'}
-          </button>
+          <img src={logo} alt="Nippon Journeys" title="Nippon Journeys" style={styles.headerLogo} />
           <h1 style={styles.logo}>Nippon Journeys</h1>
         </div>
 <div
@@ -189,6 +185,20 @@ const DashboardLayout = ({ children }) => {
                 <span style={styles.menuIcon}>❓</span>
                 {!isCollapsed && <span style={styles.menuLabel}>Ajuda</span>}
               </Link>
+
+                            {/* Botão Recolher menu */}
+              <button
+                onClick={() => setIsCollapsed(!isCollapsed)}
+                style={{
+                  ...styles.collapseButton,
+                  justifyContent: isCollapsed ? 'center' : 'flex-start',
+                  paddingLeft: isCollapsed ? '0' : '16px',
+                }}
+                title={isCollapsed ? 'Expandir menu' : ''}
+              >
+                <span style={styles.menuIcon}>{isCollapsed ? '▶' : '◀'}</span>
+                {!isCollapsed && <span style={styles.menuLabel}>Recolher menu</span>}
+              </button>
             </div>
           </nav>
         </aside>
@@ -221,10 +231,15 @@ const styles = {
     top: 0,
     zIndex: 100,
   },
+    headerLogo: {
+    width: '24px',
+    height: '24px',
+    objectFit: 'contain',
+  },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
-    gap: '16px',
+    gap: '10px',
   },
   toggleButton: {
     width: '20px',
@@ -465,6 +480,23 @@ const styles = {
     transition: 'margin-left 0.3s ease',
     minHeight: 'calc(100vh - 72px)',
   },
+
+  collapseButton: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    padding: '12px 16px',
+    color: '#c3c4c7',
+    backgroundColor: 'transparent',
+    border: 'none',
+    width: '100%',
+    cursor: 'pointer',
+    fontSize: '14px',
+    fontWeight: '500',
+    transition: 'all 0.2s',
+    fontFamily: 'inherit',
+  },
+
 };
 
 export default DashboardLayout;
