@@ -63,6 +63,14 @@ function App() {
               </PrivateRoute>
             }
           />
+
+          {/* Qualquer rota desconhecida volta pro login */}
+          <Route path="*" 
+            element={
+              <Navigate 
+              to="/login" />
+              } 
+              />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
