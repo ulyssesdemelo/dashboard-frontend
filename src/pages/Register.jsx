@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Register = () => {
@@ -9,21 +9,26 @@ const Register = () => {
   const [serverError, setServerError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const {
+const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
   const password = watch('password');
 
+const [successMsg, setSuccessMsg] = useState('');
+
   const onSubmit = async (data) => {
     try {
       setLoading(true);
       setServerError('');
+      setSuccessMsg('');
       await registerUser(data.name, data.email, data.password);
-      navigate('/login');
+      setSuccessMsg(`Usuário "${data.name}" criado com sucesso!`);
+      reset(); // limpa o formulário
     } catch (error) {
       setServerError(error.response?.data?.error || 'Erro ao criar conta');
     } finally {
@@ -136,6 +141,11 @@ const Register = () => {
             <div style={styles.serverError}>{serverError}</div>
           )}
 
+          {/* Mensagem de sucesso */}
+          {successMsg && (
+            <div style={styles.successMsg}>{successMsg}</div>
+          )}
+
           {/* Botão de Cadastro */}
           <button
             type="submit"
@@ -149,13 +159,6 @@ const Register = () => {
           </button>
 
         </form>
-
-        <p style={styles.linkText}>
-          Já tem uma conta?{' '}
-          <Link to="/login" style={styles.link}>
-            Faça login
-          </Link>
-        </p>
       </div>
     </div>
   );
@@ -163,10 +166,10 @@ const Register = () => {
 
 const styles = {
   container: {
-    minHeight: '100vh',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: '20px',
     backgroundColor: '#f0f2f5',
   },
   card: {
@@ -217,6 +220,14 @@ const styles = {
   serverError: {
     backgroundColor: '#fdecea',
     color: '#e74c3c',
+    padding: '12px',
+    borderRadius: '8px',
+    fontSize: '14px',
+    textAlign: 'center',
+  },
+  successMsg: {
+    backgroundColor: '#d4edda',
+    color: '#155724',
     padding: '12px',
     borderRadius: '8px',
     fontSize: '14px',

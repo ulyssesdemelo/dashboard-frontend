@@ -18,7 +18,6 @@ function App() {
           
           {/* Rotas públicas */}
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
 
           {/* Rotas protegidas com DashboardLayout */}
           <Route
@@ -27,6 +26,17 @@ function App() {
               <PrivateRoute>
                 <DashboardLayout>
                   <Home />
+                </DashboardLayout>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard/usuarios/novo"
+            element={
+              <PrivateRoute>
+                <DashboardLayout>
+                  <Register />
                 </DashboardLayout>
               </PrivateRoute>
             }

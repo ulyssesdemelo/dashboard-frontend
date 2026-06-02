@@ -19,6 +19,7 @@ const DashboardLayout = ({ children }) => {
     { path: '/dashboard', icon: '📊', label: 'Início' },
     { path: '/dashboard/clientes', icon: '👥', label: 'Clientes' },
     { path: '/dashboard/notifications', icon: '🔔', label: 'Notificações' },
+    { path: '/dashboard/usuarios/novo', icon: '➕', label: 'Novo Usuário' },
   ];
 
   const isActive = (path) => location.pathname === path;
