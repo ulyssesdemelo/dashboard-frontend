@@ -75,6 +75,21 @@ const DashboardLayout = ({ children }) => {
 
               <div style={styles.dropdownDivider} />
 
+
+              {/* Configurações */}
+              <Link to="/dashboard/settings" style={styles.dropdownItem}>
+                <span style={styles.dropdownItemIcon}>⚙️</span>
+                Configurações
+              </Link>
+
+              {/* Ajuda */}
+              <Link to="/dashboard/help" style={styles.dropdownItem}>
+                <span style={styles.dropdownItemIcon}>❓</span>
+                Ajuda
+              </Link>
+
+              <div style={styles.dropdownDivider} />
+
               {/* Botão Sair */}
               <button onClick={handleLogout} style={styles.dropdownLogout}>
                 <span style={styles.dropdownLogoutIcon}>↪</span>
@@ -120,80 +135,8 @@ const DashboardLayout = ({ children }) => {
               ))}
             </div>
 
-            {/* Card de capacidade (quando expandido) */}
-            {!isCollapsed && (
-              <div style={styles.capacityCard}>
-                <div style={styles.capacityHeader}>
-                  <div style={styles.progressCircle}>
-                    <svg width="60" height="60" viewBox="0 0 60 60">
-                      <circle
-                        cx="30"
-                        cy="30"
-                        r="25"
-                        fill="none"
-                        stroke="#e9ecef"
-                        strokeWidth="6"
-                      />
-                      <circle
-                        cx="30"
-                        cy="30"
-                        r="25"
-                        fill="none"
-                        stroke="#4f46e5"
-                        strokeWidth="6"
-                        strokeDasharray="157"
-                        strokeDashoffset="94"
-                        strokeLinecap="round"
-                        transform="rotate(-90 30 30)"
-                      />
-                      <text
-                        x="30"
-                        y="35"
-                        textAnchor="middle"
-                        fontSize="14"
-                        fontWeight="600"
-                        fill="#4f46e5"
-                      >
-                        60%
-                      </text>
-                    </svg>
-                  </div>
-                </div>
-                <p style={styles.capacityTitle}>Capacidade usada</p>
-                <p style={styles.capacityText}>
-                  Você já está usando 60% da sua capacidade.
-                </p>
-                <button style={styles.upgradeButton}>Fazer upgrade</button>
-              </div>
-            )}
-
             {/* Configurações e Help */}
             <div style={styles.bottomMenu}>
-              <Link
-                to="/dashboard/settings"
-                style={{
-                  ...styles.menuItem,
-                  justifyContent: isCollapsed ? 'center' : 'flex-start',
-                  paddingLeft: isCollapsed ? '0' : '16px',
-                }}
-                title={isCollapsed ? 'Configurações' : ''}
-              >
-                <span style={styles.menuIcon}>⚙️</span>
-                {!isCollapsed && <span style={styles.menuLabel}>Configurações</span>}
-              </Link>
-
-              <Link
-                to="/dashboard/help"
-                style={{
-                  ...styles.menuItem,
-                  justifyContent: isCollapsed ? 'center' : 'flex-start',
-                  paddingLeft: isCollapsed ? '0' : '16px',
-                }}
-                title={isCollapsed ? 'Ajuda' : ''}
-              >
-                <span style={styles.menuIcon}>❓</span>
-                {!isCollapsed && <span style={styles.menuLabel}>Ajuda</span>}
-              </Link>
 
                             {/* Botão Recolher menu */}
               <button
@@ -302,14 +245,12 @@ const styles = {
     fontWeight: '600',
     border: '2px solid #fff',
   },
-
     headerAvatarImg: {
     width: '100%',
     height: '100%',
     borderRadius: '50%',
     objectFit: 'cover',
   },
-
   dropdown: {
     position: 'absolute',
     top: '36px',
@@ -380,18 +321,31 @@ const styles = {
     cursor: 'pointer',
     textAlign: 'left',
   },
+  dropdownItem: {
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
+    padding: '10px 8px',
+    color: '#1a1a2e',
+    textDecoration: 'none',
+    fontSize: '14px',
+    fontWeight: '500',
+    borderRadius: '8px',
+  },
+  dropdownItemIcon: {
+    fontSize: '16px',
+  },
   dropdownLogoutIcon: {
     fontSize: '16px',
   },
-
-
   mainContainer: {
     display: 'flex',
     position: 'relative',
   },
   sidebar: {
     backgroundColor: '#1d2327',
-    height: 'calc(100vh - 30px)',
+    height: 'calc(100dvh - 30px)',
     position: 'fixed',
     left: 0,
     top: '30px',
@@ -448,44 +402,6 @@ const styles = {
   menuLabel: {
     whiteSpace: 'nowrap',
   },
-  capacityCard: {
-    backgroundColor: '#f8f9ff',
-    borderRadius: '12px',
-    padding: '20px',
-    margin: '16px 12px',
-    textAlign: 'center',
-  },
-  capacityHeader: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginBottom: '12px',
-  },
-  progressCircle: {
-    position: 'relative',
-  },
-  capacityTitle: {
-    fontSize: '14px',
-    fontWeight: '600',
-    color: '#1a1a2e',
-    margin: '0 0 6px 0',
-  },
-  capacityText: {
-    fontSize: '12px',
-    color: '#6b7280',
-    margin: '0 0 16px 0',
-    lineHeight: '1.5',
-  },
-  upgradeButton: {
-    width: '100%',
-    padding: '10px',
-    backgroundColor: '#4f46e5',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    fontSize: '13px',
-    fontWeight: '600',
-    cursor: 'pointer',
-  },
   bottomMenu: {
     borderTop: '1px solid #3b3b3b',
     paddingTop: '16px',
@@ -495,7 +411,7 @@ const styles = {
     flex: 1,
     padding: '1.1rem 1rem 1rem 1.3rem',
     transition: 'margin-left 0.3s ease',
-    minHeight: 'calc(100vh - 72px)',
+    minHeight: 'calc(100dvh - 72px)',
   },
 
   collapseButton: {
