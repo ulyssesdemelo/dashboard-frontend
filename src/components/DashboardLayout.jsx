@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { LayoutDashboard, Users, Bell, UserPlus, Settings, HelpCircle, LogOut, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import logo from '../assets/images/headerlogo-nippon-journeys-branco-48x48.png';
 
 const DashboardLayout = ({ children }) => {
@@ -15,11 +16,11 @@ const DashboardLayout = ({ children }) => {
     navigate('/login');
   };
 
-  const menuItems = [
-    { path: '/dashboard', icon: '📊', label: 'Início' },
-    { path: '/dashboard/clientes', icon: '👥', label: 'Clientes' },
-    { path: '/dashboard/notifications', icon: '🔔', label: 'Notificações' },
-    { path: '/dashboard/usuarios/novo', icon: '➕', label: 'Novo Usuário' },
+const menuItems = [
+    { path: '/dashboard', icon: LayoutDashboard, label: 'Início' },
+    { path: '/dashboard/clientes', icon: Users, label: 'Clientes' },
+    { path: '/dashboard/notifications', icon: Bell, label: 'Notificações' },
+    { path: '/dashboard/usuarios/novo', icon: UserPlus, label: 'Novo Usuário' },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -41,23 +42,40 @@ const DashboardLayout = ({ children }) => {
           <img src={logo} alt="Nippon Journeys" title="Nippon Journeys" style={styles.headerLogo} />
           <h1 style={styles.logo}>Nippon Journeys</h1>
         </div>
-<div
-          style={styles.avatarMenuContainer}
-          onMouseEnter={() => setMenuOpen(true)}
-          onMouseLeave={() => setMenuOpen(false)}
-        >
-          {/* Avatar no header */}
-<div style={styles.headerAvatar}>
-            {user?.avatar_url ? (
-              <img
-                src={user.avatar_url}
-                alt={user.name}
-                style={styles.headerAvatarImg}
-              />
-            ) : (
-              getInitials(user?.name)
-            )}
+<div style={styles.headerRight}>
+          {/* Sininho de notificações (decorativo) */}
+          <div style={styles.bellBox}>
+            <Bell size={20} color="#1a1a2e" />
+            <span style={styles.bellDot} />
           </div>
+
+          {/* Bloco do usuário + dropdown */}
+          <div
+            style={styles.avatarMenuContainer}
+            onMouseEnter={() => setMenuOpen(true)}
+            onMouseLeave={() => setMenuOpen(false)}
+          >
+            {/* Avatar */}
+            <div style={styles.headerAvatar}>
+              {user?.avatar_url ? (
+                <img
+                  src={user.avatar_url}
+                  alt={user.name}
+                  style={styles.headerAvatarImg}
+                />
+              ) : (
+                getInitials(user?.name)
+              )}
+            </div>
+
+            {/* Nome + cargo */}
+            <div style={styles.headerUserInfo}>
+              <span style={styles.headerUserName}>{user?.name}</span>
+              <span style={styles.headerUserRole}>Admin</span>
+            </div>
+
+            {/* Setinha */}
+            <ChevronDown size={16} color="#fff" />
 
           {/* Dropdown */}
           {menuOpen && (
@@ -77,27 +95,34 @@ const DashboardLayout = ({ children }) => {
 
 
               {/* Configurações */}
-              <Link to="/dashboard/settings" style={styles.dropdownItem}>
-                <span style={styles.dropdownItemIcon}>⚙️</span>
+<Link to="/dashboard/settings" style={styles.dropdownItem}>
+                <span style={styles.dropdownItemIcon}>
+                  <Settings size={18} />
+                </span>
                 Configurações
               </Link>
 
               {/* Ajuda */}
-              <Link to="/dashboard/help" style={styles.dropdownItem}>
-                <span style={styles.dropdownItemIcon}>❓</span>
+<Link to="/dashboard/help" style={styles.dropdownItem}>
+                <span style={styles.dropdownItemIcon}>
+                  <HelpCircle size={18} />
+                </span>
                 Ajuda
               </Link>
 
               <div style={styles.dropdownDivider} />
 
               {/* Botão Sair */}
-              <button onClick={handleLogout} style={styles.dropdownLogout}>
-                <span style={styles.dropdownLogoutIcon}>↪</span>
+<button onClick={handleLogout} style={styles.dropdownLogout}>
+                <span style={styles.dropdownLogoutIcon}>
+                  <LogOut size={18} />
+                </span>
                 Sair
               </button>
             </div>
           )}
         </div>
+         </div>
       </header>
 
       <div style={styles.mainContainer}>
@@ -127,7 +152,9 @@ const DashboardLayout = ({ children }) => {
                   }}
                   title={isCollapsed ? item.label : ''}
                 >
-                  <span style={styles.menuIcon}>{item.icon}</span>
+                  <span style={styles.menuIcon}>
+                    <item.icon size={18} />
+                  </span>
                   {!isCollapsed && (
                     <span style={styles.menuLabel}>{item.label}</span>
                   )}
@@ -148,7 +175,9 @@ const DashboardLayout = ({ children }) => {
                 }}
                 title={isCollapsed ? 'Expandir menu' : ''}
               >
-                <span style={styles.menuIcon}>{isCollapsed ? '▶' : '◀'}</span>
+                <span style={styles.menuIcon}>
+                  {isCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+                </span>
                 {!isCollapsed && <span style={styles.menuLabel}>Recolher menu</span>}
               </button>
             </div>
@@ -223,18 +252,59 @@ const styles = {
     cursor: 'pointer',
     transition: 'all 0.2s',
   },
-
-
   avatarMenuContainer: {
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',
     paddingBottom: '4px',
+    gap: '8px',
   },
+
+  headerRight: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
+  },
+  bellBox: {
+    position: 'relative',
+    width: '26px',
+    height: '26px',
+    borderRadius: '50%',
+    backgroundColor: '#fff',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+  },
+  bellDot: {
+    position: 'absolute',
+    top: '4px',
+    right: '5px',
+    width: '7px',
+    height: '7px',
+    borderRadius: '50%',
+    backgroundColor: '#e74c3c',
+  },
+  headerUserInfo: {
+    display: 'flex',
+    flexDirection: 'column',
+    lineHeight: '1.2',
+  },
+  headerUserName: {
+    fontSize: '13px',
+    fontWeight: '600',
+    color: '#fff',
+    whiteSpace: 'nowrap',
+  },
+  headerUserRole: {
+    fontSize: '11px',
+    color: '#8e9aaf',
+  },
+
   headerAvatar: {
-    width: '28px',
-    height: '28px',
+    width: '24px',
+    height: '24px',
     borderRadius: '50%',
     backgroundColor: '#4f46e5',
     color: '#fff',
@@ -253,7 +323,7 @@ const styles = {
   },
   dropdown: {
     position: 'absolute',
-    top: '36px',
+    top: '33px',
     right: 0,
     width: '240px',
     backgroundColor: '#fff',
