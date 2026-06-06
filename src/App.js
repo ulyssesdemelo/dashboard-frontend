@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import Clientes from './pages/Clientes';
+import ClienteForm from './pages/ClienteForm';
 import Notifications from './pages/Notifications';
 
 function App() {
@@ -48,6 +49,17 @@ function App() {
               <PrivateRoute>
                 <DashboardLayout>
                   <Clientes />
+                </DashboardLayout>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard/clientes/novo"
+            element={
+              <PrivateRoute>
+                <DashboardLayout>
+                  <ClienteForm />
                 </DashboardLayout>
               </PrivateRoute>
             }
