@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, Users, Bell, UserPlus, Settings, HelpCircle, LogOut, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
+import { LayoutDashboard, Users, Dock, FileText, Presentation, Map, VectorSquare, DraftingCompass, Link2, SmartphoneNfc, Bell, UserPlus, Settings, HelpCircle, LogOut, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import logo from '../assets/images/headerlogo-nippon-journeys-branco-48x48.png';
 
 const DashboardLayout = ({ children }) => {
@@ -19,7 +19,14 @@ const DashboardLayout = ({ children }) => {
 const menuItems = [
     { path: '/dashboard', icon: LayoutDashboard, label: 'Início' },
     { path: '/dashboard/clientes', icon: Users, label: 'Clientes' },
-    { path: '/dashboard/notifications', icon: Bell, label: 'Notificações' },
+    { path: '/dashboard/clientesX', icon: Dock, label: 'Site' },
+    { path: '/dashboard/clientesZ', icon: FileText, label: 'Blog' },
+    { path: '/dashboard/clientesP', icon: Presentation, label: 'Landing Page' },
+    { path: '/dashboard/notifications', icon: Map, label: 'Roteiros' },
+    { path: '/dashboard/notificationsT', icon: VectorSquare, label: 'Grupos' },
+    { path: '/dashboard/notificationsH', icon: DraftingCompass, label: 'Travel Design' },
+    { path: '/dashboard/notificationsK', icon: Link2, label: 'Links Curtos' },
+    { path: '/dashboard/notificationsM', icon: SmartphoneNfc, label: 'Notificações' },
     { path: '/dashboard/usuarios/novo', icon: UserPlus, label: 'Novo Usuário' },
   ];
 

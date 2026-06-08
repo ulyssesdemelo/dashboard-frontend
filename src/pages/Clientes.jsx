@@ -95,7 +95,7 @@ const Clientes = () => {
           <table style={styles.table}>
             <thead>
               <tr>
-                <th style={styles.th}>CVJ</th>
+                <th style={styles.th}>#CVJ</th>
                 <th style={styles.th}>Nome</th>
                 <th style={styles.th}>WhatsApp</th>
                 <th style={styles.th}>E-mail</th>
