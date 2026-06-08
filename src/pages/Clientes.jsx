@@ -99,7 +99,7 @@ const Clientes = () => {
                 <th style={styles.th}>Nome</th>
                 <th style={styles.th}>WhatsApp</th>
                 <th style={styles.th}>E-mail</th>
-                <th style={styles.th}>Ativo</th>
+                <th style={styles.th}>Status</th>
                 <th style={styles.th}>Data Criada</th>
               </tr>
             </thead>
