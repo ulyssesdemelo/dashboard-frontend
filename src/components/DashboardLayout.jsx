@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LayoutDashboard, Users, Dock, FileText, Presentation, Map, VectorSquare, DraftingCompass, Timeline, Link2, SmartphoneNfc, Bell, UserPlus, Settings, HelpCircle, LogOut, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
+import { Menu, LayoutDashboard, Users, Dock, FileText, Presentation, Map, VectorSquare, DraftingCompass, Timeline, Link2, CircleCheckBig, SmartphoneNfc, Bell, UserPlus, Settings, HelpCircle, LogOut, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
 import logo from '../assets/images/headerlogo-nippon-journeys-branco-48x48.png';
 
 const DashboardLayout = ({ children }) => {
@@ -10,6 +10,7 @@ const DashboardLayout = ({ children }) => {
   const navigate = useNavigate();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [sidebarVisible, setSidebarVisible] = useState(true);
 
   const handleLogout = () => {
     logout();
@@ -27,6 +28,7 @@ const menuItems = [
     { path: '/dashboard/notificationsH', icon: DraftingCompass, label: 'Travel Design' },
     { path: '/dashboard/notificationsL', icon: Timeline, label: 'Micro Site' },
     { path: '/dashboard/notificationsK', icon: Link2, label: 'Links Curtos' },
+    { path: '/dashboard/notificationsX', icon: CircleCheckBig, label: 'Tarefas' },
     { path: '/dashboard/notificationsM', icon: SmartphoneNfc, label: 'Notificações' },
     { path: '/dashboard/usuarios/novo', icon: UserPlus, label: 'Novo Usuário' },
   ];
@@ -46,14 +48,21 @@ const menuItems = [
     <div style={styles.container}>
       {/* Header */}
       <header style={styles.header}>
-        <div style={styles.headerLeft}>
+<div style={styles.headerLeft}>
+          <button
+            onClick={() => setSidebarVisible(!sidebarVisible)}
+            style={styles.hamburgerButton}
+            title={sidebarVisible ? 'Ocultar menu' : 'Mostrar menu'}
+          >
+            <Menu size={22} color="#fff" />
+          </button>
           <img src={logo} alt="Nippon Journeys" title="Nippon Journeys" style={styles.headerLogo} />
           <h1 style={styles.logo}>Nippon Journeys</h1>
         </div>
 <div style={styles.headerRight}>
           {/* Sininho de notificações (decorativo) */}
           <div style={styles.bellBox}>
-            <Bell size={20} color="#1a1a2e" />
+            <Bell size={20} color="#fff" />
             <span style={styles.bellDot} />
           </div>
 
@@ -138,6 +147,7 @@ const menuItems = [
         <aside style={{
           ...styles.sidebar,
           width: isCollapsed ? '50px' : '170px',
+          transform: sidebarVisible ? 'translateX(0)' : 'translateX(-100%)',
         }}>
           <nav style={styles.nav}>
             <div style={styles.menuSection}>
@@ -193,9 +203,9 @@ const menuItems = [
         </aside>
 
         {/* Content */}
-        <main style={{
+<main style={{
           ...styles.content,
-          marginLeft: isCollapsed ? '50px' : '170px',
+          marginLeft: !sidebarVisible ? '0' : (isCollapsed ? '50px' : '170px'),
         }}>
           {children}
         </main>
@@ -208,6 +218,15 @@ const styles = {
   container: {
     minHeight: '100vh',
     backgroundColor: '#f5f7fa',
+  },
+  hamburgerButton: {
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '4px',
   },
   header: {
     backgroundColor: '#1d2327',
@@ -279,7 +298,7 @@ const styles = {
     width: '26px',
     height: '26px',
     borderRadius: '50%',
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -430,7 +449,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     borderRight: '1px solid #e9ecef',
-    transition: 'width 0.3s ease',
+    transition: 'width 0.3s ease, transform 0.3s ease',
     overflow: 'hidden',
   },
   nav: {
