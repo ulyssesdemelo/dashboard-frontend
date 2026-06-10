@@ -54,7 +54,7 @@ const menuItems = [
             style={styles.hamburgerButton}
             title={sidebarVisible ? 'Ocultar menu' : 'Mostrar menu'}
           >
-            <Menu size={22} color="#fff" />
+            <Menu size={22} color="rgb(26, 26, 46)" />
           </button>
           <img src={logo} alt="Nippon Journeys" title="Nippon Journeys" style={styles.headerLogo} />
           <h1 style={styles.logo}>Nippon Journeys</h1>
@@ -62,7 +62,7 @@ const menuItems = [
 <div style={styles.headerRight}>
           {/* Sininho de notificações (decorativo) */}
           <div style={styles.bellBox}>
-            <Bell size={20} color="#fff" />
+            <Bell size={20} color="rgb(26, 26, 46)" />
             <span style={styles.bellDot} />
           </div>
 
@@ -92,7 +92,7 @@ const menuItems = [
             </div>
 
             {/* Setinha */}
-            <ChevronDown size={16} color="#fff" />
+            <ChevronDown size={16} color="rgb(26, 26, 46)" />
 
           {/* Dropdown */}
           {menuOpen && (
@@ -229,7 +229,7 @@ const styles = {
     padding: '4px',
   },
   header: {
-    backgroundColor: '#1d2327',
+    backgroundColor: '#f5f7fa',
     padding: '1px 15px',
     display: 'flex',
     alignItems: 'center',
@@ -265,8 +265,8 @@ const styles = {
   logo: {
     margin: 0,
     fontSize: '14px',
-    fontWeight: '400',
-    color: '#fff',
+    fontWeight: '600',
+    color: 'rgb(26, 26, 46)',
   },
   logoutButton: {
     padding: '8px 8px',
@@ -321,7 +321,7 @@ const styles = {
   headerUserName: {
     fontSize: '13px',
     fontWeight: '600',
-    color: '#fff',
+    color: 'rgb(26, 26, 46)',
     whiteSpace: 'nowrap',
   },
   headerUserRole: {
@@ -333,7 +333,7 @@ const styles = {
     width: '24px',
     height: '24px',
     borderRadius: '50%',
-    backgroundColor: '#4f46e5',
+    backgroundColor: 'rgb(26, 26, 46)',
     color: '#fff',
     display: 'flex',
     alignItems: 'center',
@@ -369,7 +369,7 @@ const styles = {
     width: '44px',
     height: '44px',
     borderRadius: '50%',
-    backgroundColor: '#4f46e5',
+    backgroundColor: 'rgb(26, 26, 46)',
     color: '#fff',
     display: 'flex',
     alignItems: 'center',
@@ -441,7 +441,7 @@ const styles = {
     position: 'relative',
   },
   sidebar: {
-    backgroundColor: '#1d2327',
+    backgroundColor: 'rgb(245, 247, 250)',
     height: 'calc(100dvh - 30px)',
     position: 'fixed',
     left: 0,
@@ -476,7 +476,7 @@ const styles = {
     alignItems: 'center',
     gap: '12px',
     padding: '12px 16px',
-    color: '#c3c4c7',
+    color: 'rgb(26, 26, 46)',
     textDecoration: 'none',
     fontSize: '14px',
     fontWeight: '500',
@@ -485,7 +485,7 @@ const styles = {
     borderRadius: '0px',
   },
   menuItemActive: {
-    backgroundColor: '#2271b1',
+    backgroundColor: 'rgb(26, 26, 46)',
     color: '#fff',
     fontWeight: '500',
   },
@@ -500,7 +500,7 @@ const styles = {
     whiteSpace: 'nowrap',
   },
   bottomMenu: {
-    borderTop: '1px solid #3b3b3b',
+    borderTop: '1px solid rgb(233, 236, 239)',
     paddingTop: '16px',
     marginTop: '16px',
   },
@@ -516,7 +516,7 @@ const styles = {
     alignItems: 'center',
     gap: '12px',
     padding: '12px 16px',
-    color: '#c3c4c7',
+    color: 'rgb(26, 26, 46)',
     backgroundColor: 'transparent',
     border: 'none',
     width: '100%',

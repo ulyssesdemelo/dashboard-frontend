@@ -185,7 +185,7 @@ const styles = {
     alignItems: 'center',
     gap: '8px',
     padding: '10px 18px',
-    backgroundColor: '#4f46e5',
+    backgroundColor: 'rgb(26, 26, 46)',
     color: '#fff',
     border: 'none',
     borderRadius: '8px',

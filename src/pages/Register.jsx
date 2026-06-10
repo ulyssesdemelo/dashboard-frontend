@@ -168,7 +168,7 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: '20px',
-    backgroundColor: '#f0f2f5',
+    backgroundColor: 'rgb(245, 247, 250)',
   },
   card: {
     backgroundColor: '#fff',
@@ -233,7 +233,7 @@ const styles = {
   },
   button: {
     padding: '13px',
-    backgroundColor: '#4f46e5',
+    backgroundColor: 'rgb(26, 26, 46)',
     color: '#fff',
     border: 'none',
     borderRadius: '8px',
@@ -249,7 +249,7 @@ const styles = {
     fontSize: '14px',
   },
   link: {
-    color: '#4f46e5',
+    color: 'rgb(26, 26, 46)',
     fontWeight: '600',
     textDecoration: 'none',
   },

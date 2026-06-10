@@ -224,9 +224,9 @@ const styles = {
   title: { fontSize: '24px', color: '#1a1a2e', margin: 0 },
   backButton: {
     padding: '8px 16px',
-    backgroundColor: '#fff',
-    color: '#4f46e5',
-    border: '1.5px solid #4f46e5',
+    backgroundColor: 'rgb(245, 247, 250)',
+    color: 'rgb(26, 26, 46)',
+    border: '1.5px solid rgb(26, 26, 46)',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',
@@ -242,7 +242,7 @@ const styles = {
   sectionTitle: {
     fontSize: '15px',
     fontWeight: '600',
-    color: '#4f46e5',
+    color: 'rgb(26, 26, 46)',
     margin: '12px 0 0 0',
     paddingBottom: '8px',
     borderBottom: '1px solid #eee',
@@ -290,7 +290,7 @@ const styles = {
   },
   button: {
     padding: '13px',
-    backgroundColor: '#4f46e5',
+    backgroundColor: 'rgb(26, 26, 46)',
     color: '#fff',
     border: 'none',
     borderRadius: '8px',

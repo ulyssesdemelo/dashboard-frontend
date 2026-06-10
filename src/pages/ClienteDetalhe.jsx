@@ -13,6 +13,7 @@ const ClienteDetalhe = () => {
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [alterado, setAlterado] = useState(false);
+  const [abaAtiva, setAbaAtiva] = useState('detalhes');
 
   // Monta o código CVJ
   const formatCVJ = (id) => `CVJ-${String(id).padStart(4, '0')}`;
@@ -25,8 +26,20 @@ const ClienteDetalhe = () => {
         const response = await api.get(`/clientes/${id}`);
         const cliente = response.data.cliente;
         // Formata a data de nascimento pro input type="date" (YYYY-MM-DD)
-        if (cliente.data_nascimento) {
+if (cliente.data_nascimento) {
           cliente.data_nascimento = cliente.data_nascimento.split('T')[0];
+        }
+        if (cliente.passaporte_emissao) {
+          cliente.passaporte_emissao = cliente.passaporte_emissao.split('T')[0];
+        }
+        if (cliente.passaporte_vencimento) {
+          cliente.passaporte_vencimento = cliente.passaporte_vencimento.split('T')[0];
+        }
+        if (cliente.visto_vencimento) {
+          cliente.visto_vencimento = cliente.visto_vencimento.split('T')[0];
+        }
+        if (cliente.seguro_vencimento) {
+          cliente.seguro_vencimento = cliente.seguro_vencimento.split('T')[0];
         }
         setForm(cliente);
         setError('');
@@ -94,13 +107,28 @@ const ClienteDetalhe = () => {
       </div>
 
       <div style={styles.card}>
-        {/* Aba única (por enquanto) */}
+{/* Abas */}
         <div style={styles.tabs}>
-          <span style={styles.tabActive}>Detalhes do cliente</span>
+          <span
+            style={abaAtiva === 'detalhes' ? styles.tabActive : styles.tab}
+            onClick={() => setAbaAtiva('detalhes')}
+          >
+            Detalhes do cliente
+          </span>
+          <span
+            style={abaAtiva === 'documentos' ? styles.tabActive : styles.tab}
+            onClick={() => setAbaAtiva('documentos')}
+          >
+            Documentos
+          </span>
         </div>
 
         {/* Campos */}
         <div style={styles.body}>
+
+          {/* ABA: Detalhes do cliente */}
+          {abaAtiva === 'detalhes' && (
+            <>
           <div style={styles.row}>
             <div style={styles.inputGroup}>
               <label style={styles.label}>Nome *</label>
@@ -226,6 +254,112 @@ const ClienteDetalhe = () => {
             />
             <label htmlFor="ativo" style={styles.checkboxLabel}>Cliente ativo</label>
           </div>
+          </>
+          )}
+
+          {/* ABA: Documentos */}
+          {abaAtiva === 'documentos' && (
+            <>
+              {/* Passaporte */}
+              <h3 style={styles.sectionTitle}>Passaporte</h3>
+              <div style={styles.row}>
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Número do passaporte</label>
+                  <input
+                    style={styles.input}
+                    value={form.passaporte_numero || ''}
+                    onChange={(e) => handleChange('passaporte_numero', e.target.value)}
+                  />
+                </div>
+              </div>
+              <div style={styles.row}>
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Data de emissão</label>
+                  <input
+                    type="date"
+                    style={styles.input}
+                    value={form.passaporte_emissao || ''}
+                    onChange={(e) => handleChange('passaporte_emissao', e.target.value)}
+                  />
+                </div>
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Data de vencimento</label>
+                  <input
+                    type="date"
+                    style={styles.input}
+                    value={form.passaporte_vencimento || ''}
+                    onChange={(e) => handleChange('passaporte_vencimento', e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/* Documento Nacional */}
+              <h3 style={styles.sectionTitle}>Documento Nacional</h3>
+              <div style={styles.row}>
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>RG ou CNH</label>
+                  <input
+                    style={styles.input}
+                    value={form.rg_cnh || ''}
+                    onChange={(e) => handleChange('rg_cnh', e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/* Visto */}
+              <h3 style={styles.sectionTitle}>Visto</h3>
+              <div style={styles.row}>
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Tipo de visto</label>
+                  <select
+                    style={styles.input}
+                    value={form.visto_tipo || ''}
+                    onChange={(e) => handleChange('visto_tipo', e.target.value)}
+                  >
+                    <option value="">Selecione...</option>
+                    <option value="Turismo">Turismo</option>
+                    <option value="Trabalho">Trabalho</option>
+                    <option value="Estudo">Estudo</option>
+                    <option value="Nômade Digital">Nômade Digital</option>
+                  </select>
+                </div>
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Vencimento do visto</label>
+                  <input
+                    type="date"
+                    style={styles.input}
+                    value={form.visto_vencimento || ''}
+                    onChange={(e) => handleChange('visto_vencimento', e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/* Seguro Viagem */}
+              <h3 style={styles.sectionTitle}>Seguro Viagem</h3>
+              <div style={styles.checkboxRow}>
+                <input
+                  type="checkbox"
+                  id="seguro_ativo"
+                  checked={form.seguro_ativo || false}
+                  onChange={(e) => handleChange('seguro_ativo', e.target.checked)}
+                />
+                <label htmlFor="seguro_ativo" style={styles.checkboxLabel}>
+                  Possui seguro viagem
+                </label>
+              </div>
+              <div style={styles.row}>
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Vencimento do seguro</label>
+                  <input
+                    type="date"
+                    style={styles.input}
+                    value={form.seguro_vencimento || ''}
+                    onChange={(e) => handleChange('seguro_vencimento', e.target.value)}
+                  />
+                </div>
+              </div>
+            </>
+          )}
 
           {/* Mensagens */}
           {successMsg && <div style={styles.successMsg}>{successMsg}</div>}
@@ -256,8 +390,8 @@ const styles = {
   topBar: { display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '20px' },
   backButton: {
     display: 'flex', alignItems: 'center', gap: '6px',
-    padding: '8px 14px', backgroundColor: '#fff', color: '#4f46e5',
-    border: '1.5px solid #4f46e5', borderRadius: '8px',
+    padding: '8px 14px', backgroundColor: 'rgb(245, 247, 250)', color: 'rgb(26, 26, 46)',
+    border: '1.5px solid rgb(26, 26, 46)', borderRadius: '8px',
     fontSize: '14px', fontWeight: '500', cursor: 'pointer',
   },
   title: { fontSize: '20px', color: '#1a1a2e', margin: 0 },
@@ -266,10 +400,25 @@ const styles = {
     boxShadow: '0 1px 3px rgba(0,0,0,0.08)', overflow: 'hidden',
   },
   tabs: { borderBottom: '1px solid #eee', padding: '0 24px' },
-  tabActive: {
-    display: 'inline-block', padding: '16px 4px',
-    fontSize: '14px', fontWeight: '600', color: '#4f46e5',
+tabActive: {
+    display: 'inline-block',
+    padding: '16px 4px',
+    marginRight: '24px',
+    fontSize: '14px',
+    fontWeight: '600',
+    color: '#4f46e5',
     borderBottom: '2px solid #4f46e5',
+    cursor: 'pointer',
+  },
+  tab: {
+    display: 'inline-block',
+    padding: '16px 4px',
+    marginRight: '24px',
+    fontSize: '14px',
+    fontWeight: '600',
+    color: '#888',
+    cursor: 'pointer',
+    borderBottom: '2px solid transparent',
   },
   body: { padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' },
   row: { display: 'flex', gap: '16px' },
@@ -299,7 +448,7 @@ const styles = {
     display: 'flex', justifyContent: 'flex-end',
   },
   saveButton: {
-    padding: '11px 28px', backgroundColor: '#4f46e5', color: '#fff',
+    padding: '11px 28px', backgroundColor: '#333', color: '#fff',
     border: 'none', borderRadius: '8px', fontSize: '15px', fontWeight: '600',
   },
 };
