@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import Clientes from './pages/Clientes';
 import ClienteForm from './pages/ClienteForm';
+import ClienteDetalhe from './pages/ClienteDetalhe';
 import Notifications from './pages/Notifications';
 
 function App() {
@@ -60,6 +61,17 @@ function App() {
               <PrivateRoute>
                 <DashboardLayout>
                   <ClienteForm />
+                </DashboardLayout>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard/clientes/:id"
+            element={
+              <PrivateRoute>
+                <DashboardLayout>
+                  <ClienteDetalhe />
                 </DashboardLayout>
               </PrivateRoute>
             }
