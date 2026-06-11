@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Menu, LayoutDashboard, Users, Dock, FileText, Presentation, Map, VectorSquare, DraftingCompass, Timeline, Link2, CircleCheckBig, SmartphoneNfc, Bell, UserPlus, Settings, HelpCircle, LogOut, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
-import logo from '../assets/images/headerlogo-nippon-journeys-branco-48x48.png';
+import logo from '../assets/images/headerlogo-nippon-journeys-48x48.png';
 
 const DashboardLayout = ({ children }) => {
   const { user, logout } = useAuth();

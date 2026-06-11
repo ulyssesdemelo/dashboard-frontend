@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { meses_minimos_passaporte } from '../config/regras';
 import { ArrowLeft } from 'lucide-react';
 import api from '../services/api';
 
@@ -93,6 +94,35 @@ if (cliente.data_nascimento) {
       </div>
     );
   }
+
+  // Calcula o status do passaporte com base na data de vencimento
+  const calcularAlertaPassaporte = (vencimento) => {
+    if (!vencimento) return null; // sem data, sem alerta
+
+    const hoje = new Date();
+    const dataVencimento = new Date(vencimento);
+
+    // Data mínima exigida: hoje + X meses
+    const dataMinima = new Date();
+    dataMinima.setMonth(dataMinima.getMonth() + meses_minimos_passaporte);
+
+    if (dataVencimento < hoje) {
+      return {
+        tipo: 'vencido',
+        mensagem: 'Passaporte VENCIDO. Renovação necessária antes de viajar.',
+      };
+    }
+    if (dataVencimento < dataMinima) {
+      return {
+        tipo: 'atencao',
+        mensagem: `Atenção: passaporte com menos de ${meses_minimos_passaporte} meses de validade. O Japão exige no mínimo ${meses_minimos_passaporte} meses.`,
+      };
+    }
+    return {
+      tipo: 'ok',
+      mensagem: 'Passaporte com validade adequada para a viagem.',
+    };
+  };
 
   return (
     <div style={styles.container}>
@@ -291,6 +321,16 @@ if (cliente.data_nascimento) {
                     onChange={(e) => handleChange('passaporte_vencimento', e.target.value)}
                   />
                 </div>
+                {/* Alerta do passaporte */}
+              {(() => {
+                const alerta = calcularAlertaPassaporte(form.passaporte_vencimento);
+                if (!alerta) return null;
+                const estilo =
+                  alerta.tipo === 'vencido' ? styles.alertaVencido
+                  : alerta.tipo === 'atencao' ? styles.alertaAtencao
+                  : styles.alertaOk;
+                return <div style={estilo}>{alerta.mensagem}</div>;
+              })()}
               </div>
 
               {/* Documento Nacional */}
@@ -406,8 +446,8 @@ tabActive: {
     marginRight: '24px',
     fontSize: '14px',
     fontWeight: '600',
-    color: '#4f46e5',
-    borderBottom: '2px solid #4f46e5',
+    color: 'rgb(26, 26, 46)',
+    borderBottom: '2px solid rgb(26, 26, 46)',
     cursor: 'pointer',
   },
   tab: {
@@ -442,6 +482,33 @@ tabActive: {
   serverError: {
     backgroundColor: '#fdecea', color: '#e74c3c',
     padding: '12px', borderRadius: '8px', fontSize: '14px', textAlign: 'center',
+  },
+  alertaVencido: {
+    backgroundColor: '#fdecea',
+    color: '#c0392b',
+    padding: '12px 14px',
+    borderRadius: '8px',
+    fontSize: '13px',
+    fontWeight: '600',
+    borderLeft: '4px solid #c0392b',
+  },
+  alertaAtencao: {
+    backgroundColor: '#fff8e1',
+    color: '#b8860b',
+    padding: '12px 14px',
+    borderRadius: '8px',
+    fontSize: '13px',
+    fontWeight: '600',
+    borderLeft: '4px solid #f0ad4e',
+  },
+  alertaOk: {
+    backgroundColor: '#eafaf1',
+    color: '#1e8449',
+    padding: '12px 14px',
+    borderRadius: '8px',
+    fontSize: '13px',
+    fontWeight: '500',
+    borderLeft: '4px solid #2ecc71',
   },
   footer: {
     padding: '16px 24px', borderTop: '1px solid #eee',
