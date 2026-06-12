@@ -188,7 +188,7 @@ const getStyles = (theme) => ({
     padding: '10px 18px',
     backgroundColor: theme.primary,
     color: theme.primaryText,
-    border: 'none',
+    border: `1px solid ${theme.text}`,
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '600',
@@ -203,7 +203,7 @@ const getStyles = (theme) => ({
   },
   nomeCliente: {
     fontWeight: '600',
-    color: theme.primary,
+    color: theme.text,
     marginBottom: '4px',
   },
   rowActions: {
@@ -213,7 +213,7 @@ const getStyles = (theme) => ({
     fontSize: '13px',
   },
   actionLink: {
-    color: theme.primary,
+    color: theme.textMuted,
     cursor: 'pointer',
   },
   actionLinkDanger: {

@@ -2,11 +2,15 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import logo from '../assets/images/dashboard-logotipo-nippon-journeys-viagens-e-turismo-tsuru-492x216.png';
+import { useTheme } from '../context/ThemeContext';
+import logo from '../assets/images/dashboard-nippon-journeys-viagens-e-turismo-tsuru-branco-492x216.png';
 
 const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { theme } = useTheme();
+  const styles = getStyles(theme);
+
   const [serverError, setServerError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -44,7 +48,7 @@ const Login = () => {
             <input
               style={{
                 ...styles.input,
-                borderColor: errors.email ? '#e74c3c' : '#ddd',
+                borderColor: errors.email ? theme.danger : theme.border,
               }}
               type="email"
               placeholder="seu@email.com"
@@ -67,7 +71,7 @@ const Login = () => {
             <input
               style={{
                 ...styles.input,
-                borderColor: errors.password ? '#e74c3c' : '#ddd',
+                borderColor: errors.password ? theme.danger : theme.border,
               }}
               type="password"
               placeholder="Sua senha"
@@ -102,36 +106,30 @@ const Login = () => {
           </button>
 
         </form>
-        {/* Removido: cadastro público não é permitido em CRM */}
-        {/* <p style={styles.linkText}>Não tem uma conta?{' '}
-          <Link to="/register" style={styles.link}>
-            Cadastre-se
-          </Link>
-        </p> */}
       </div>
     </div>
   );
 };
 
-const styles = {
+const getStyles = (theme) => ({
   container: {
     minHeight: '100vh',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-        flexFlow: 'column',
-    backgroundColor: 'rgb(243, 244, 246)',
-},
-    logo: {
-  width: '180px',
-  height: 'auto',
-  display: 'block',
-  margin: '0 auto 30px auto',
-},
+    flexFlow: 'column',
+    backgroundColor: theme.bg,
+  },
+  logo: {
+    width: '180px',
+    height: 'auto',
+    display: 'block',
+    margin: '0 auto 30px auto',
+  },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.surface,
     padding: '20px 40px',
-    border: '1px solid rgba(75, 85, 99, 0.2)',
+    border: `1px solid ${theme.border}`,
     borderRadius: '.4rem',
     width: '100%',
     maxWidth: '20rem',
@@ -139,12 +137,12 @@ const styles = {
   title: {
     margin: '0 0 8px 0',
     fontSize: '28px',
-    color: '#1a1a2e',
+    color: theme.text,
     textAlign: 'center',
   },
   subtitle: {
     margin: '0 0 32px 0',
-    color: '#888',
+    color: theme.textMuted,
     textAlign: 'center',
   },
   form: {
@@ -159,19 +157,21 @@ const styles = {
   },
   label: {
     fontSize: '14px',
-    color: '#333',
+    color: theme.text,
   },
   input: {
     padding: '12px 16px',
     borderRadius: '8px',
-    border: '1.5px solid #ddd',
+    border: `1.5px solid ${theme.border}`,
+    backgroundColor: theme.surface,
+    color: theme.text,
     fontSize: '15px',
     outline: 'none',
     transition: 'border-color 0.2s',
   },
   errorText: {
     fontSize: '12px',
-    color: '#e74c3c',
+    color: theme.danger,
   },
   serverError: {
     backgroundColor: '#fdecea',
@@ -195,14 +195,14 @@ const styles = {
   linkText: {
     textAlign: 'center',
     marginTop: '24px',
-    color: '#888',
+    color: theme.textMuted,
     fontSize: '14px',
   },
   link: {
-    color: '#4f46e5',
+    color: theme.primary,
     fontWeight: '600',
     textDecoration: 'none',
   },
-};
+});
 
 export default Login;

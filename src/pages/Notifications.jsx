@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import api from '../services/api';
 
 const Notifications = () => {
+  const { theme } = useTheme();
+  const styles = getStyles(theme);
+
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState('');
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState(''); // 'success' ou 'error'
+  const [messageType, setMessageType] = useState('');
 
-  // Buscar usuários com dispositivos cadastrados
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -20,33 +23,26 @@ const Notifications = () => {
         console.error('Erro ao buscar usuários:', error);
       }
     };
-
     fetchUsers();
   }, []);
 
   const handleSendToUser = async (e) => {
     e.preventDefault();
-    
     if (!selectedUser || !title || !body) {
       setMessage('Preencha todos os campos!');
       setMessageType('error');
       return;
     }
-
     setLoading(true);
     setMessage('');
-
     try {
       const response = await api.post('/notifications/send', {
         userId: parseInt(selectedUser),
         title,
         body,
       });
-
       setMessage(response.data.message);
       setMessageType('success');
-      
-      // Limpar campos
       setTitle('');
       setBody('');
       setSelectedUser('');
@@ -60,30 +56,23 @@ const Notifications = () => {
 
   const handleSendToAll = async (e) => {
     e.preventDefault();
-    
     if (!title || !body) {
       setMessage('Preencha título e mensagem!');
       setMessageType('error');
       return;
     }
-
     if (!window.confirm('Enviar notificação para TODOS os usuários?')) {
       return;
     }
-
     setLoading(true);
     setMessage('');
-
     try {
       const response = await api.post('/notifications/send-all', {
         title,
         body,
       });
-
       setMessage(response.data.message);
       setMessageType('success');
-      
-      // Limpar campos
       setTitle('');
       setBody('');
     } catch (error) {
@@ -156,11 +145,7 @@ const Notifications = () => {
                 />
               </div>
 
-              <button
-                type="submit"
-                style={styles.button}
-                disabled={loading}
-              >
+              <button type="submit" style={styles.button} disabled={loading}>
                 {loading ? 'Enviando...' : '📤 Enviar para Usuário'}
               </button>
             </form>
@@ -195,10 +180,7 @@ const Notifications = () => {
 
               <button
                 type="submit"
-                style={{
-                  ...styles.button,
-                  backgroundColor: '#e74c3c',
-                }}
+                style={{ ...styles.button, backgroundColor: theme.danger }}
                 disabled={loading}
               >
                 {loading ? 'Enviando...' : '📢 Enviar para TODOS'}
@@ -233,10 +215,10 @@ const Notifications = () => {
   );
 };
 
-const styles = {
+const getStyles = (theme) => ({
   container: {
     minHeight: '100vh',
-    backgroundColor: '#f0f2f5',
+    backgroundColor: theme.bg,
     padding: '32px',
   },
   content: {
@@ -246,7 +228,7 @@ const styles = {
   title: {
     fontSize: '32px',
     fontWeight: 'bold',
-    color: '#1a1a2e',
+    color: theme.text,
     marginBottom: '24px',
   },
   message: {
@@ -262,15 +244,16 @@ const styles = {
     marginBottom: '32px',
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.surface,
     padding: '24px',
     borderRadius: '12px',
     boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
+    border: `1px solid ${theme.border}`,
   },
   cardTitle: {
     fontSize: '20px',
     fontWeight: '600',
-    color: '#1a1a2e',
+    color: theme.text,
     marginBottom: '20px',
   },
   formGroup: {
@@ -280,40 +263,48 @@ const styles = {
     display: 'block',
     fontSize: '14px',
     fontWeight: '600',
-    color: '#333',
+    color: theme.text,
     marginBottom: '6px',
   },
   input: {
     width: '100%',
     padding: '12px',
-    border: '1.5px solid #ddd',
+    border: `1.5px solid ${theme.border}`,
+    backgroundColor: theme.surface,
+    color: theme.text,
     borderRadius: '8px',
     fontSize: '15px',
     outline: 'none',
+    boxSizing: 'border-box',
   },
   select: {
     width: '100%',
     padding: '12px',
-    border: '1.5px solid #ddd',
+    border: `1.5px solid ${theme.border}`,
     borderRadius: '8px',
     fontSize: '15px',
     outline: 'none',
-    backgroundColor: '#fff',
+    backgroundColor: theme.surface,
+    color: theme.text,
+    boxSizing: 'border-box',
   },
   textarea: {
     width: '100%',
     padding: '12px',
-    border: '1.5px solid #ddd',
+    border: `1.5px solid ${theme.border}`,
+    backgroundColor: theme.surface,
+    color: theme.text,
     borderRadius: '8px',
     fontSize: '15px',
     outline: 'none',
     resize: 'vertical',
+    boxSizing: 'border-box',
   },
   button: {
     width: '100%',
     padding: '14px',
-    backgroundColor: '#4f46e5',
-    color: '#fff',
+    backgroundColor: theme.primary,
+    color: theme.primaryText,
     border: 'none',
     borderRadius: '8px',
     fontSize: '16px',
@@ -322,19 +313,20 @@ const styles = {
     marginTop: '8px',
   },
   usersList: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.surface,
     padding: '24px',
     borderRadius: '12px',
     boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
+    border: `1px solid ${theme.border}`,
   },
   usersTitle: {
     fontSize: '18px',
     fontWeight: '600',
-    color: '#1a1a2e',
+    color: theme.text,
     marginBottom: '16px',
   },
   noUsers: {
-    color: '#888',
+    color: theme.textMuted,
     textAlign: 'center',
     padding: '20px',
   },
@@ -345,26 +337,26 @@ const styles = {
   },
   userCard: {
     padding: '16px',
-    backgroundColor: '#f8f9fa',
+    backgroundColor: theme.surfaceAlt,
     borderRadius: '8px',
-    border: '1px solid #e9ecef',
+    border: `1px solid ${theme.border}`,
   },
   userName: {
     fontSize: '16px',
     fontWeight: '600',
-    color: '#1a1a2e',
+    color: theme.text,
     marginBottom: '4px',
   },
   userEmail: {
     fontSize: '14px',
-    color: '#666',
+    color: theme.textMuted,
     marginBottom: '8px',
   },
   userDevices: {
     fontSize: '13px',
-    color: '#4f46e5',
+    color: theme.primary,
     fontWeight: '500',
   },
-};
+});
 
 export default Notifications;

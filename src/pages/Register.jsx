@@ -1,13 +1,18 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 
 const Register = () => {
   const { register: registerUser } = useAuth();
+  const { theme } = useTheme();
+  const styles = getStyles(theme);
+
   const [serverError, setServerError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState('');
 
-const {
+  const {
     register,
     handleSubmit,
     watch,
@@ -17,8 +22,6 @@ const {
 
   const password = watch('password');
 
-const [successMsg, setSuccessMsg] = useState('');
-
   const onSubmit = async (data) => {
     try {
       setLoading(true);
@@ -26,7 +29,7 @@ const [successMsg, setSuccessMsg] = useState('');
       setSuccessMsg('');
       await registerUser(data.name, data.email, data.password);
       setSuccessMsg(`Usuário "${data.name}" criado com sucesso!`);
-      reset(); // limpa o formulário
+      reset();
     } catch (error) {
       setServerError(error.response?.data?.error || 'Erro ao criar conta');
     } finally {
@@ -48,7 +51,7 @@ const [successMsg, setSuccessMsg] = useState('');
             <input
               style={{
                 ...styles.input,
-                borderColor: errors.name ? '#e74c3c' : '#ddd',
+                borderColor: errors.name ? theme.danger : theme.border,
               }}
               type="text"
               placeholder="Seu nome completo"
@@ -71,7 +74,7 @@ const [successMsg, setSuccessMsg] = useState('');
             <input
               style={{
                 ...styles.input,
-                borderColor: errors.email ? '#e74c3c' : '#ddd',
+                borderColor: errors.email ? theme.danger : theme.border,
               }}
               type="email"
               placeholder="seu@email.com"
@@ -94,7 +97,7 @@ const [successMsg, setSuccessMsg] = useState('');
             <input
               style={{
                 ...styles.input,
-                borderColor: errors.password ? '#e74c3c' : '#ddd',
+                borderColor: errors.password ? theme.danger : theme.border,
               }}
               type="password"
               placeholder="Mínimo 6 caracteres"
@@ -117,7 +120,7 @@ const [successMsg, setSuccessMsg] = useState('');
             <input
               style={{
                 ...styles.input,
-                borderColor: errors.confirmPassword ? '#e74c3c' : '#ddd',
+                borderColor: errors.confirmPassword ? theme.danger : theme.border,
               }}
               type="password"
               placeholder="Repita sua senha"
@@ -162,31 +165,32 @@ const [successMsg, setSuccessMsg] = useState('');
   );
 };
 
-const styles = {
+const getStyles = (theme) => ({
   container: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: '20px',
-    backgroundColor: 'rgb(245, 247, 250)',
+    backgroundColor: theme.bg,
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.surface,
     padding: '40px',
     borderRadius: '12px',
     boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+    border: `1px solid ${theme.border}`,
     width: '100%',
     maxWidth: '400px',
   },
   title: {
     margin: '0 0 8px 0',
     fontSize: '28px',
-    color: '#1a1a2e',
+    color: theme.text,
     textAlign: 'center',
   },
   subtitle: {
     margin: '0 0 32px 0',
-    color: '#888',
+    color: theme.textMuted,
     textAlign: 'center',
   },
   form: {
@@ -202,18 +206,20 @@ const styles = {
   label: {
     fontSize: '14px',
     fontWeight: '600',
-    color: '#333',
+    color: theme.text,
   },
   input: {
     padding: '12px 16px',
     borderRadius: '8px',
-    border: '1.5px solid #ddd',
+    border: `1.5px solid ${theme.border}`,
+    backgroundColor: theme.surface,
+    color: theme.text,
     fontSize: '15px',
     outline: 'none',
   },
   errorText: {
     fontSize: '12px',
-    color: '#e74c3c',
+    color: theme.danger,
   },
   serverError: {
     backgroundColor: '#fdecea',
@@ -233,8 +239,8 @@ const styles = {
   },
   button: {
     padding: '13px',
-    backgroundColor: 'rgb(26, 26, 46)',
-    color: '#fff',
+    backgroundColor: theme.primary,
+    color: theme.primaryText,
     border: 'none',
     borderRadius: '8px',
     fontSize: '16px',
@@ -245,14 +251,14 @@ const styles = {
   linkText: {
     textAlign: 'center',
     marginTop: '24px',
-    color: '#888',
+    color: theme.textMuted,
     fontSize: '14px',
   },
   link: {
-    color: 'rgb(26, 26, 46)',
+    color: theme.primary,
     fontWeight: '600',
     textDecoration: 'none',
   },
-};
+});
 
 export default Register;

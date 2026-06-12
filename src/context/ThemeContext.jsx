@@ -8,7 +8,7 @@ const temaClaro = {
   text: '#1a1a2e',      // texto principal
   textMuted: '#8e9aaf', // texto secundário
   border: '#e9ecef',    // bordas e divisores
-  primary: '#4f46e5',   // cor de destaque/ação
+  primary: '#2c3138',   // cor de destaque/ação
   primaryText: '#ffffff',// texto sobre a cor de destaque
   danger: '#e74c3c',    // vermelho (deletar, erros)
 };
@@ -21,7 +21,7 @@ const temaEscuro = {
   text: '#e4e6eb',
   textMuted: '#9aa0a6',
   border: '#3a3f44',
-  primary: '#6366f1',
+  primary: '#1a1d21',
   primaryText: '#ffffff',
   danger: '#f87171',
 };

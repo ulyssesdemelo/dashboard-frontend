@@ -246,7 +246,7 @@ const getStyles = (theme) => ({
   sectionTitle: {
     fontSize: '15px',
     fontWeight: '600',
-    color: theme.primary,
+    color: theme.text,
     margin: '12px 0 0 0',
     paddingBottom: '8px',
     borderBottom: `1px solid ${theme.border}`,

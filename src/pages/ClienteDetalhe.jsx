@@ -337,7 +337,7 @@ const getStyles = (theme) => ({
   tabs: { borderBottom: `1px solid ${theme.border}`, padding: '0 24px' },
   tabActive: {
     display: 'inline-block', padding: '16px 4px', marginRight: '24px',
-    fontSize: '14px', fontWeight: '600', color: theme.primary,
+    fontSize: '14px', fontWeight: '600', color: theme.text,
     borderBottom: `2px solid ${theme.primary}`, cursor: 'pointer',
   },
   tab: {
@@ -350,7 +350,7 @@ const getStyles = (theme) => ({
   inputGroup: { display: 'flex', flexDirection: 'column', gap: '6px', flex: 1 },
   label: { fontSize: '13px', fontWeight: '600', color: theme.text },
   sectionTitle: {
-    fontSize: '15px', fontWeight: '600', color: theme.primary,
+    fontSize: '15px', fontWeight: '600', color: theme.text,
     margin: '12px 0 0 0', paddingBottom: '8px', borderBottom: `1px solid ${theme.border}`,
   },
   input: {
