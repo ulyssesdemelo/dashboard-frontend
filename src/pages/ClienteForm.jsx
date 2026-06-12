@@ -227,9 +227,9 @@ const getStyles = (theme) => ({
   title: { fontSize: '24px', color: theme.text, margin: 0 },
   backButton: {
     padding: '8px 16px',
-    backgroundColor: theme.surface,
+    backgroundColor: 'theme.surface',
     color: theme.text,
-    border: `1.5px solid ${theme.text}`,
+    border: '`1.5px solid ${theme.text}`',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',

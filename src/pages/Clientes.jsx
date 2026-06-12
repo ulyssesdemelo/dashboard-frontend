@@ -188,7 +188,7 @@ const getStyles = (theme) => ({
     padding: '10px 18px',
     backgroundColor: theme.primary,
     color: theme.primaryText,
-    border: `1px solid ${theme.text}`,
+    border: 'none',
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '600',
