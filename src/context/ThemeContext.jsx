@@ -30,10 +30,17 @@ const ThemeContext = createContext();
 
 // O "Provider" envolve o app e fornece o tema pra todos
 export const ThemeProvider = ({ children }) => {
-  const [isDark, setIsDark] = useState(false); // começa no claro
+  // Lê o tema salvo no navegador (se não houver, começa no claro)
+  const [isDark, setIsDark] = useState(() => {
+    return localStorage.getItem('tema') === 'escuro';
+  });
 
   const theme = isDark ? temaEscuro : temaClaro; // escolhe o kit ativo
-  const toggleTheme = () => setIsDark(!isDark);  // alterna entre os dois
+const toggleTheme = () => {
+    const novoValor = !isDark;
+    setIsDark(novoValor);
+    localStorage.setItem('tema', novoValor ? 'escuro' : 'claro');
+  };
 
   return (
     <ThemeContext.Provider value={{ theme, isDark, toggleTheme }}>
