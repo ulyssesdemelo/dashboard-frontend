@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Users, TrendingUp, ShoppingCart, Star } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 import api from '../services/api';
 
 const Home = () => {
+  const { theme } = useTheme();
+  const styles = getStyles(theme);
+
   const [totalClientes, setTotalClientes] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -45,7 +49,7 @@ const Home = () => {
           <div style={styles.cardTop}>
             <span style={styles.cardTitle}>Clientes</span>
             <div style={styles.cardIconBox}>
-              <Users size={18} color="#1a1a2e" />
+              <Users size={18} color={theme.textMuted} />
             </div>
           </div>
           <p style={styles.cardValue}>
@@ -58,7 +62,7 @@ const Home = () => {
           <div style={styles.cardTop}>
             <span style={styles.cardTitle}>Vendas</span>
             <div style={styles.cardIconBox}>
-              <TrendingUp size={18} color="#1a1a2e" />
+              <TrendingUp size={18} color={theme.textMuted} />
             </div>
           </div>
           <p style={styles.cardValue}>R$ 45.678</p>
@@ -69,7 +73,7 @@ const Home = () => {
           <div style={styles.cardTop}>
             <span style={styles.cardTitle}>Pedidos</span>
             <div style={styles.cardIconBox}>
-              <ShoppingCart size={18} color="#1a1a2e" />
+              <ShoppingCart size={18} color={theme.textMuted} />
             </div>
           </div>
           <p style={styles.cardValue}>567</p>
@@ -80,7 +84,7 @@ const Home = () => {
           <div style={styles.cardTop}>
             <span style={styles.cardTitle}>Avaliações</span>
             <div style={styles.cardIconBox}>
-              <Star size={18} color="#1a1a2e" />
+              <Star size={18} color={theme.textMuted} />
             </div>
           </div>
           <p style={styles.cardValue}>4.8</p>
@@ -91,21 +95,22 @@ const Home = () => {
   );
 };
 
-const styles = {
+const getStyles = (theme) => ({
   welcomeCard: {
     padding: '0 10px 0 4px',
     borderRadius: '12px',
     marginBottom: '32px',
-    color: '#1a1a2e',
+    color: theme.text,
   },
   welcomeTitle: {
     margin: 0,
     fontSize: '24px',
+    color: theme.text,
   },
   welcomeText: {
     margin: 0,
     fontSize: '14px',
-    opacity: '0.9',
+    color: theme.textMuted,
   },
   errorCard: {
     backgroundColor: '#fdecea',
@@ -118,13 +123,14 @@ const styles = {
   cardsGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-    gap: '14px',
+    gap: '24px',
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.surface,
     padding: '20px',
     borderRadius: '10px',
-    boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+    boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+    border: `1px solid ${theme.border}`,
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
@@ -135,15 +141,15 @@ const styles = {
     justifyContent: 'space-between',
   },
   cardTitle: {
-    fontSize: '1.123rem',
-    color: '#555',
+    fontSize: '14px',
+    color: theme.textMuted,
     fontWeight: '500',
   },
   cardIconBox: {
     width: '32px',
     height: '32px',
     borderRadius: '8px',
-    backgroundColor: '#f3f4f6',
+    backgroundColor: theme.surfaceAlt,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -151,9 +157,9 @@ const styles = {
   cardValue: {
     margin: 0,
     fontSize: '28px',
-    fontWeight: '600',
-    color: '#1a1a2e',
+    fontWeight: '700',
+    color: theme.text,
   },
-};
+});
 
 export default Home;

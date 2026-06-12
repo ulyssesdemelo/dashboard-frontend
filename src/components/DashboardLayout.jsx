@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Menu, LayoutDashboard, Users, Dock, FileText, Presentation, Map, VectorSquare, DraftingCompass, Timeline, Link2, CircleCheckBig, SmartphoneNfc, Bell, UserPlus, Settings, HelpCircle, LogOut, ChevronLeft, ChevronRight, ChevronDown } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+import { Menu, LayoutDashboard, Users, Dock, FileText, Presentation, Map, VectorSquare, DraftingCompass, Timeline, Link2, CircleCheckBig, SmartphoneNfc, Bell, UserPlus, Settings, HelpCircle, LogOut, ChevronLeft, ChevronRight, ChevronDown, Sun, Moon } from 'lucide-react';
 import logo from '../assets/images/headerlogo-nippon-journeys-48x48.png';
 
 const DashboardLayout = ({ children }) => {
@@ -11,6 +12,8 @@ const DashboardLayout = ({ children }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [sidebarVisible, setSidebarVisible] = useState(true);
+  const { theme, isDark, toggleTheme } = useTheme();
+  const styles = getStyles(theme);
 
   const handleLogout = () => {
     logout();
@@ -54,15 +57,26 @@ const menuItems = [
             style={styles.hamburgerButton}
             title={sidebarVisible ? 'Ocultar menu' : 'Mostrar menu'}
           >
-            <Menu size={22} color="rgb(26, 26, 46)" />
+            <Menu size={22} color={theme.text} />
           </button>
           <img src={logo} alt="Nippon Journeys" title="Nippon Journeys" style={styles.headerLogo} />
           <h1 style={styles.logo}>Nippon Journeys</h1>
         </div>
 <div style={styles.headerRight}>
+          {/* Botão de tema (claro/escuro) */}
+          <button
+            onClick={toggleTheme}
+            style={styles.themeButton}
+            title={isDark ? 'Modo claro' : 'Modo escuro'}
+          >
+{isDark
+              ? <Sun size={20} color={theme.text} />
+              : <Moon size={20} color={theme.text} />}
+          </button>
+
           {/* Sininho de notificações (decorativo) */}
           <div style={styles.bellBox}>
-            <Bell size={20} color="rgb(26, 26, 46)" />
+            <Bell size={20} color={theme.text} />
             <span style={styles.bellDot} />
           </div>
 
@@ -92,7 +106,7 @@ const menuItems = [
             </div>
 
             {/* Setinha */}
-            <ChevronDown size={16} color="rgb(26, 26, 46)" />
+            <ChevronDown size={16} color={theme.text} />
 
           {/* Dropdown */}
           {menuOpen && (
@@ -214,10 +228,10 @@ const menuItems = [
   );
 };
 
-const styles = {
-  container: {
+const getStyles = (theme) => ({
+container: {
     minHeight: '100vh',
-    backgroundColor: '#f5f7fa',
+    backgroundColor: theme.bg,
   },
   hamburgerButton: {
     background: 'transparent',
@@ -228,8 +242,17 @@ const styles = {
     justifyContent: 'center',
     padding: '4px',
   },
-  header: {
-    backgroundColor: '#f5f7fa',
+  themeButton: {
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '4px',
+  },
+header: {
+    backgroundColor: theme.surface,
     padding: '1px 15px',
     display: 'flex',
     alignItems: 'center',
@@ -262,11 +285,11 @@ const styles = {
     justifyContent: 'center',
     transition: 'all 0.2s',
   },
-  logo: {
+logo: {
     margin: 0,
     fontSize: '14px',
     fontWeight: '600',
-    color: 'rgb(26, 26, 46)',
+    color: theme.text,
   },
   logoutButton: {
     padding: '8px 8px',
@@ -318,15 +341,15 @@ const styles = {
     flexDirection: 'column',
     lineHeight: '1.2',
   },
-  headerUserName: {
+headerUserName: {
     fontSize: '13px',
     fontWeight: '600',
-    color: 'rgb(26, 26, 46)',
+    color: theme.text,
     whiteSpace: 'nowrap',
   },
-  headerUserRole: {
+headerUserRole: {
     fontSize: '11px',
-    color: '#8e9aaf',
+    color: theme.textMuted,
   },
 
   headerAvatar: {
@@ -348,12 +371,12 @@ const styles = {
     borderRadius: '50%',
     objectFit: 'cover',
   },
-  dropdown: {
+dropdown: {
     position: 'absolute',
     top: '33px',
     right: 0,
     width: '240px',
-    backgroundColor: '#fff',
+    backgroundColor: theme.surface,
     borderRadius: '12px',
     boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
     padding: '12px',
@@ -381,26 +404,26 @@ const styles = {
   dropdownUserInfo: {
     overflow: 'hidden',
   },
-  dropdownName: {
+dropdownName: {
     fontSize: '14px',
     fontWeight: '600',
-    color: '#1a1a2e',
+    color: theme.text,
     margin: 0,
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
-  dropdownEmail: {
+dropdownEmail: {
     fontSize: '12px',
-    color: '#8e9aaf',
+    color: theme.textMuted,
     margin: 0,
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
-  dropdownDivider: {
+dropdownDivider: {
     height: '1px',
-    backgroundColor: '#e9ecef',
+    backgroundColor: theme.border,
     margin: '8px 0',
   },
   dropdownLogout: {
@@ -418,13 +441,13 @@ const styles = {
     cursor: 'pointer',
     textAlign: 'left',
   },
-  dropdownItem: {
+dropdownItem: {
     width: '100%',
     display: 'flex',
     alignItems: 'center',
     gap: '10px',
     padding: '10px 8px',
-    color: '#1a1a2e',
+    color: theme.text,
     textDecoration: 'none',
     fontSize: '14px',
     fontWeight: '500',
@@ -440,15 +463,15 @@ const styles = {
     display: 'flex',
     position: 'relative',
   },
-  sidebar: {
-    backgroundColor: 'rgb(245, 247, 250)',
+sidebar: {
+    backgroundColor: theme.surface,
     height: 'calc(100dvh - 30px)',
     position: 'fixed',
     left: 0,
     top: '30px',
     display: 'flex',
     flexDirection: 'column',
-    borderRight: '1px solid #e9ecef',
+    borderRight: `1px solid ${theme.border}`,
     transition: 'width 0.3s ease, transform 0.3s ease',
     overflow: 'hidden',
   },
@@ -471,12 +494,12 @@ const styles = {
     marginBottom: '8px',
     transition: 'opacity 0.3s',
   },
-  menuItem: {
+menuItem: {
     display: 'flex',
     alignItems: 'center',
     gap: '12px',
     padding: '12px 16px',
-    color: 'rgb(26, 26, 46)',
+    color: theme.text,
     textDecoration: 'none',
     fontSize: '14px',
     fontWeight: '500',
@@ -484,9 +507,9 @@ const styles = {
     margin: '2px 0px',
     borderRadius: '0px',
   },
-  menuItemActive: {
-    backgroundColor: 'rgb(26, 26, 46)',
-    color: '#fff',
+menuItemActive: {
+    backgroundColor: theme.primary,
+    color: theme.primaryText,
     fontWeight: '500',
   },
   menuIcon: {
@@ -499,8 +522,8 @@ const styles = {
   menuLabel: {
     whiteSpace: 'nowrap',
   },
-  bottomMenu: {
-    borderTop: '1px solid rgb(233, 236, 239)',
+bottomMenu: {
+    borderTop: `1px solid ${theme.border}`,
     paddingTop: '16px',
     marginTop: '16px',
   },
@@ -511,12 +534,12 @@ const styles = {
     minHeight: 'calc(100dvh - 72px)',
   },
 
-  collapseButton: {
+collapseButton: {
     display: 'flex',
     alignItems: 'center',
     gap: '12px',
     padding: '12px 16px',
-    color: 'rgb(26, 26, 46)',
+    color: theme.text,
     backgroundColor: 'transparent',
     border: 'none',
     width: '100%',
@@ -526,7 +549,6 @@ const styles = {
     transition: 'all 0.2s',
     fontFamily: 'inherit',
   },
-
-};
+});
 
 export default DashboardLayout;

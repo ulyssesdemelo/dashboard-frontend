@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Plus } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
 import api from '../services/api';
 
 const Clientes = () => {
   const navigate = useNavigate();
+  const { theme } = useTheme();
+  const styles = getStyles(theme);
+
   const [clientes, setClientes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -29,7 +33,7 @@ const Clientes = () => {
     fetchClientes();
   }, []);
 
-// Monta o código CVJ a partir do id (id 1 -> CVJ-0001)
+  // Monta o código CVJ a partir do id (id 1 -> CVJ-0001)
   const formatCVJ = (id) => {
     return `CVJ-${String(id).padStart(4, '0')}`;
   };
@@ -38,14 +42,14 @@ const Clientes = () => {
   const formatarData = (dataISO) => {
     if (!dataISO) return '—';
     const data = new Date(dataISO);
-    return data.toLocaleDateString('pt-BR'); // dd/mm/aaaa
+    return data.toLocaleDateString('pt-BR');
   };
 
   // Formata a hora: 2026-01-21T10:34:10 -> 10:34:10
   const formatarHora = (dataISO) => {
     if (!dataISO) return '';
     const data = new Date(dataISO);
-    return data.toLocaleTimeString('pt-BR'); // hh:mm:ss
+    return data.toLocaleTimeString('pt-BR');
   };
 
   // Deletar cliente
@@ -55,7 +59,6 @@ const Clientes = () => {
 
     try {
       await api.delete(`/clientes/${id}`);
-      // Remove da lista na tela sem precisar recarregar tudo
       setClientes(clientes.filter((c) => c.id !== id));
     } catch (err) {
       console.error('Erro ao deletar:', err);
@@ -112,37 +115,35 @@ const Clientes = () => {
                   onMouseLeave={() => setLinhaHover(null)}
                 >
                   <td style={styles.td}>{formatCVJ(cliente.id)}</td>
-<td style={styles.td}>
+                  <td style={styles.td}>
                     <div style={styles.nomeCliente}>
                       {cliente.nome} {cliente.sobrenome}
                     </div>
-<div style={{
-                        ...styles.rowActions,
-                        visibility: linhaHover === cliente.id ? 'visible' : 'hidden',
-                      }}>
-                        <div style={styles.rowActions}>
-                          <span
-                            style={styles.actionLink}
-                            onClick={() => navigate(`/dashboard/clientes/${cliente.id}`)}
-                          >
-                            Ver
-                          </span>
-                          <span style={styles.actionSeparator}>|</span>
-                          <span
-                            style={styles.actionLink}
-                            onClick={() => navigate(`/dashboard/clientes/${cliente.id}?editar=true`)}
-                          >
-                            Editar
-                          </span>
-                          <span style={styles.actionSeparator}>|</span>
-                          <span
-                            style={styles.actionLinkDanger}
-                            onClick={() => handleDelete(cliente.id, `${cliente.nome} ${cliente.sobrenome}`)}
-                          >
-                            Deletar
-                          </span>
-                        </div>
-                      </div>
+                    <div style={{
+                      ...styles.rowActions,
+                      visibility: linhaHover === cliente.id ? 'visible' : 'hidden',
+                    }}>
+                      <span
+                        style={styles.actionLink}
+                        onClick={() => navigate(`/dashboard/clientes/${cliente.id}`)}
+                      >
+                        Ver
+                      </span>
+                      <span style={styles.actionSeparator}>|</span>
+                      <span
+                        style={styles.actionLink}
+                        onClick={() => navigate(`/dashboard/clientes/${cliente.id}?editar=true`)}
+                      >
+                        Editar
+                      </span>
+                      <span style={styles.actionSeparator}>|</span>
+                      <span
+                        style={styles.actionLinkDanger}
+                        onClick={() => handleDelete(cliente.id, `${cliente.nome} ${cliente.sobrenome}`)}
+                      >
+                        Deletar
+                      </span>
+                    </div>
                   </td>
                   <td style={styles.td}>{cliente.whatsapp || '—'}</td>
                   <td style={styles.td}>{cliente.email || '—'}</td>
@@ -171,22 +172,22 @@ const Clientes = () => {
   );
 };
 
-const styles = {
+const getStyles = (theme) => ({
   header: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: '24px',
   },
-  title: { fontSize: '24px', color: '#1a1a2e', margin: 0 },
-  subtitle: { fontSize: '14px', color: '#888', margin: '4px 0 0 0' },
+  title: { fontSize: '24px', color: theme.text, margin: 0 },
+  subtitle: { fontSize: '14px', color: theme.textMuted, margin: '4px 0 0 0' },
   newButton: {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
     padding: '10px 18px',
-    backgroundColor: 'rgb(26, 26, 46)',
-    color: '#fff',
+    backgroundColor: theme.primary,
+    color: theme.primaryText,
     border: 'none',
     borderRadius: '8px',
     fontSize: '14px',
@@ -194,15 +195,15 @@ const styles = {
     cursor: 'pointer',
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.surface,
     borderRadius: '10px',
     boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+    border: `1px solid ${theme.border}`,
     overflow: 'hidden',
   },
-
   nomeCliente: {
     fontWeight: '600',
-    color: '#2271b1',
+    color: theme.primary,
     marginBottom: '4px',
   },
   rowActions: {
@@ -212,23 +213,23 @@ const styles = {
     fontSize: '13px',
   },
   actionLink: {
-    color: '#2271b1',
+    color: theme.primary,
     cursor: 'pointer',
   },
   actionLinkDanger: {
-    color: '#e74c3c',
+    color: theme.danger,
     cursor: 'pointer',
   },
   actionSeparator: {
-    color: '#ccc',
+    color: theme.border,
   },
   dataText: {
     fontSize: '13px',
-    color: '#1a1a2e',
+    color: theme.text,
   },
   horaText: {
     fontSize: '12px',
-    color: '#888',
+    color: theme.textMuted,
   },
   table: { width: '100%', borderCollapse: 'collapse' },
   th: {
@@ -236,15 +237,15 @@ const styles = {
     padding: '14px 16px',
     fontSize: '13px',
     fontWeight: '600',
-    color: '#6b7280',
-    borderBottom: '1px solid #eee',
-    backgroundColor: '#f9fafb',
+    color: theme.textMuted,
+    borderBottom: `1px solid ${theme.border}`,
+    backgroundColor: theme.surfaceAlt,
   },
-  tr: { borderBottom: '1px solid #f0f0f0' },
+  tr: { borderBottom: `1px solid ${theme.border}` },
   td: {
     padding: '14px 16px',
     fontSize: '14px',
-    color: '#1a1a2e',
+    color: theme.text,
   },
   badgeActive: {
     backgroundColor: '#d4edda',
@@ -262,33 +263,10 @@ const styles = {
     fontSize: '12px',
     fontWeight: '500',
   },
-  actions: { display: 'flex', gap: '8px' },
-  editButton: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '6px',
-    backgroundColor: '#eef2ff',
-    color: '#4f46e5',
-    border: 'none',
-    borderRadius: '6px',
-    cursor: 'pointer',
-  },
-  deleteButton: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '6px',
-    backgroundColor: '#fdecea',
-    color: '#e74c3c',
-    border: 'none',
-    borderRadius: '6px',
-    cursor: 'pointer',
-  },
   empty: {
     padding: '40px',
     textAlign: 'center',
-    color: '#888',
+    color: theme.textMuted,
     fontSize: '15px',
   },
   errorCard: {
@@ -299,6 +277,6 @@ const styles = {
     marginBottom: '16px',
     textAlign: 'center',
   },
-};
+});
 
 export default Clientes;

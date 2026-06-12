@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import PrivateRoute from './components/PrivateRoute';
 import DashboardLayout from './components/DashboardLayout';
 import Login from './pages/Login';
@@ -13,6 +14,7 @@ import Notifications from './pages/Notifications';
 function App() {
   return (
     <BrowserRouter>
+    <ThemeProvider>
       <AuthProvider>
         <Routes>
           {/* Rota padrão redireciona para login */}
@@ -97,23 +99,9 @@ function App() {
               />
         </Routes>
       </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }
 
 export default App;
-
-/*
-**O que mudou?**
-- ✅ Importamos os novos componentes (Home, Clientes, Notifications, DashboardLayout)
-- ✅ Envolvemos as páginas do dashboard com `<DashboardLayout>`
-- ✅ Criamos 3 rotas: `/dashboard`, `/dashboard/clientes`, `/dashboard/notifications`
-
----
-
-## 🧪 TESTAR AGORA!
-
-Salve tudo e acesse:
-
-http://localhost:3000
-*/

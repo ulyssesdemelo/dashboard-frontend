@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
 import api from '../services/api';
 
 const ClienteForm = () => {
   const navigate = useNavigate();
+  const { theme } = useTheme();
+  const styles = getStyles(theme);
+
   const [serverError, setServerError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [loading, setLoading] = useState(false);
@@ -17,7 +21,6 @@ const ClienteForm = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    // Validação: pelo menos WhatsApp ou e-mail
     if (!data.whatsapp && !data.email) {
       setServerError('Informe pelo menos WhatsApp ou e-mail.');
       return;
@@ -60,7 +63,7 @@ const ClienteForm = () => {
             <div style={styles.inputGroup}>
               <label style={styles.label}>Nome *</label>
               <input
-                style={{ ...styles.input, borderColor: errors.nome ? '#e74c3c' : '#ddd' }}
+                style={{ ...styles.input, borderColor: errors.nome ? theme.danger : theme.border }}
                 type="text"
                 placeholder="Nome"
                 {...register('nome', { required: 'Nome é obrigatório' })}
@@ -71,7 +74,7 @@ const ClienteForm = () => {
             <div style={styles.inputGroup}>
               <label style={styles.label}>Sobrenome *</label>
               <input
-                style={{ ...styles.input, borderColor: errors.sobrenome ? '#e74c3c' : '#ddd' }}
+                style={{ ...styles.input, borderColor: errors.sobrenome ? theme.danger : theme.border }}
                 type="text"
                 placeholder="Sobrenome"
                 {...register('sobrenome', { required: 'Sobrenome é obrigatório' })}
@@ -213,7 +216,7 @@ const ClienteForm = () => {
   );
 };
 
-const styles = {
+const getStyles = (theme) => ({
   container: { maxWidth: '800px' },
   header: {
     display: 'flex',
@@ -221,40 +224,43 @@ const styles = {
     justifyContent: 'space-between',
     marginBottom: '24px',
   },
-  title: { fontSize: '24px', color: '#1a1a2e', margin: 0 },
+  title: { fontSize: '24px', color: theme.text, margin: 0 },
   backButton: {
     padding: '8px 16px',
-    backgroundColor: 'rgb(245, 247, 250)',
-    color: 'rgb(26, 26, 46)',
-    border: '1.5px solid rgb(26, 26, 46)',
+    backgroundColor: theme.surface,
+    color: theme.text,
+    border: `1.5px solid ${theme.text}`,
     borderRadius: '8px',
     fontSize: '14px',
     fontWeight: '500',
     cursor: 'pointer',
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: theme.surface,
     padding: '32px',
     borderRadius: '10px',
     boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+    border: `1px solid ${theme.border}`,
   },
   form: { display: 'flex', flexDirection: 'column', gap: '16px' },
   sectionTitle: {
     fontSize: '15px',
     fontWeight: '600',
-    color: 'rgb(26, 26, 46)',
+    color: theme.primary,
     margin: '12px 0 0 0',
     paddingBottom: '8px',
-    borderBottom: '1px solid #eee',
+    borderBottom: `1px solid ${theme.border}`,
   },
-  hint: { fontSize: '13px', color: '#888', margin: '0 0 4px 0' },
+  hint: { fontSize: '13px', color: theme.textMuted, margin: '0 0 4px 0' },
   row: { display: 'flex', gap: '16px' },
   inputGroup: { display: 'flex', flexDirection: 'column', gap: '6px', flex: 1 },
-  label: { fontSize: '13px', fontWeight: '600', color: '#333' },
+  label: { fontSize: '13px', fontWeight: '600', color: theme.text },
   input: {
     padding: '10px 14px',
     borderRadius: '8px',
-    border: '1.5px solid #ddd',
+    border: `1.5px solid ${theme.border}`,
+    backgroundColor: theme.surface,
+    color: theme.text,
     fontSize: '14px',
     outline: 'none',
     width: '100%',
@@ -263,7 +269,9 @@ const styles = {
   textarea: {
     padding: '10px 14px',
     borderRadius: '8px',
-    border: '1.5px solid #ddd',
+    border: `1.5px solid ${theme.border}`,
+    backgroundColor: theme.surface,
+    color: theme.text,
     fontSize: '14px',
     outline: 'none',
     width: '100%',
@@ -271,7 +279,7 @@ const styles = {
     resize: 'vertical',
     fontFamily: 'inherit',
   },
-  errorText: { fontSize: '12px', color: '#e74c3c' },
+  errorText: { fontSize: '12px', color: theme.danger },
   successMsg: {
     backgroundColor: '#d4edda',
     color: '#155724',
@@ -290,8 +298,8 @@ const styles = {
   },
   button: {
     padding: '13px',
-    backgroundColor: 'rgb(26, 26, 46)',
-    color: '#fff',
+    backgroundColor: theme.primary,
+    color: theme.primaryText,
     border: 'none',
     borderRadius: '8px',
     fontSize: '16px',
@@ -299,6 +307,6 @@ const styles = {
     cursor: 'pointer',
     marginTop: '8px',
   },
-};
+});
 
 export default ClienteForm;
