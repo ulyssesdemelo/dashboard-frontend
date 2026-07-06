@@ -146,6 +146,12 @@ const ClienteDetalhe = () => {
           >
             Documentos
           </span>
+          <span
+            style={abaAtiva === 'japan' ? styles.tabActive : styles.tab}
+            onClick={() => setAbaAtiva('japan')}
+          >
+            Perfil Japan
+          </span>
         </div>
 
         <div style={styles.body}>
@@ -291,6 +297,85 @@ const ClienteDetalhe = () => {
                 <div style={styles.inputGroup}>
                   <label style={styles.label}>Vencimento do seguro</label>
                   <input type="date" style={styles.input} value={form.seguro_vencimento || ''} onChange={(e) => handleChange('seguro_vencimento', e.target.value)} />
+                </div>
+              </div>
+            </>
+          )}
+          {/* ABA: Perfil Japan */}
+          {abaAtiva === 'japan' && (
+            <>
+              {/* Descendência */}
+              <h3 style={styles.sectionTitle}>Descendência</h3>
+              <div style={styles.checkboxRow}>
+                <input
+                  type="checkbox"
+                  id="descendente_japones"
+                  checked={form.descendente_japones || false}
+                  onChange={(e) => handleChange('descendente_japones', e.target.checked)}
+                />
+                <label htmlFor="descendente_japones" style={styles.checkboxLabel}>
+                  É descendente de japonês(a)
+                </label>
+              </div>
+              <div style={styles.row}>
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Geração</label>
+                  <select
+                    style={styles.input}
+                    value={form.geracao || ''}
+                    onChange={(e) => handleChange('geracao', e.target.value)}
+                  >
+                    <option value="">Selecione...</option>
+                    <option value="Issei">Issei (1ª geração)</option>
+                    <option value="Nissei">Nissei (2ª geração)</option>
+                    <option value="Sansei">Sansei (3ª geração)</option>
+                    <option value="Yonsei">Yonsei (4ª geração)</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Idioma */}
+              <h3 style={styles.sectionTitle}>Idioma</h3>
+              <div style={styles.row}>
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Nível de japonês</label>
+                  <select
+                    style={styles.input}
+                    value={form.nivel_japones || ''}
+                    onChange={(e) => handleChange('nivel_japones', e.target.value)}
+                  >
+                    <option value="">Selecione...</option>
+                    <option value="Nenhum">Nenhum</option>
+                    <option value="Básico">Básico</option>
+                    <option value="Intermediário">Intermediário</option>
+                    <option value="Fluente">Fluente</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Experiência */}
+              <h3 style={styles.sectionTitle}>Experiência</h3>
+              <div style={styles.checkboxRow}>
+                <input
+                  type="checkbox"
+                  id="ja_foi_japao"
+                  checked={form.ja_foi_japao || false}
+                  onChange={(e) => handleChange('ja_foi_japao', e.target.checked)}
+                />
+                <label htmlFor="ja_foi_japao" style={styles.checkboxLabel}>
+                  Já foi ao Japão
+                </label>
+              </div>
+              <div style={styles.row}>
+                <div style={styles.inputGroup}>
+                  <label style={styles.label}>Quantas vezes já foi</label>
+                  <input
+                    type="number"
+                    min="0"
+                    style={styles.input}
+                    value={form.vezes_japao ?? 0}
+                    onChange={(e) => handleChange('vezes_japao', e.target.value)}
+                  />
                 </div>
               </div>
             </>

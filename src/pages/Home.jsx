@@ -141,9 +141,9 @@ const getStyles = (theme) => ({
     justifyContent: 'space-between',
   },
   cardTitle: {
-    fontSize: '14px',
+    fontSize: '1.2rem',
     color: theme.textMuted,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   cardIconBox: {
     width: '32px',
