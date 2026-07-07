@@ -10,6 +10,7 @@ import Clientes from './pages/Clientes';
 import ClienteForm from './pages/ClienteForm';
 import ClienteDetalhe from './pages/ClienteDetalhe';
 import Notifications from './pages/Notifications';
+import Configuracoes from './pages/Configuracoes';
 
 function App() {
   return (
@@ -85,6 +86,17 @@ function App() {
               <PrivateRoute>
                 <DashboardLayout>
                   <Notifications />
+                </DashboardLayout>
+              </PrivateRoute>
+            }
+          />
+
+          <Route
+            path="/dashboard/settings"
+            element={
+              <PrivateRoute>
+                <DashboardLayout>
+                  <Configuracoes />
                 </DashboardLayout>
               </PrivateRoute>
             }
